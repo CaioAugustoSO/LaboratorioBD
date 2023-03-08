@@ -38,13 +38,16 @@ SET default_table_access_method = heap;
 
 -- Name: agencias; Type: TABLE; Schema: public; Owner: postgres
 CREATE TABLE public.agencias (
-    fkbanco character(3) NOT NULL,
-    pkagencia character(6) NOT NULL,
+    fkbanco character(3),
+    pkagencia character(6),
     txnomeagencia character varying(250) NOT NULL,
     fklogradouro integer,
     txcomplemento character varying(25),
     nucep character(8) DEFAULT NULL::bpchar,
-    dtcadagencia date
+    dtcadagencia date,
+    FOREIGN KEY(fkbanco) REFERENCES bancos (pkbanco),
+    FOREIGN KEY(fklogradouro) REFERENCES logradouros (pklogradouro),
+    PRIMARY KEY(fkbanco, pkagencia)
 );
 ALTER TABLE public.agencias OWNER TO postgres;
 COMMENT ON TABLE public.agencias IS 'Cadastro das agências bancárias onde os funcionários podem ter uma conta.';
@@ -59,13 +62,15 @@ COMMENT ON COLUMN public.agencias.dtcadagencia IS 'Data de geração do registro
 
 -- Name: agenciastels; Type: TABLE; Schema: public; Owner: postgres
 CREATE TABLE public.agenciastels (
-    pkagenciatel integer NOT NULL,
+    pkagenciatel serial PRIMARY KEY,
     fkbanco character(3) NOT NULL,
     fkagencia character(6) NOT NULL,
     fktipotelefone smallint DEFAULT NULL::numeric,
     nutelefone character(15) NOT NULL,
     txnomecontato character varying(30),
-    dtcadagenciatel date
+    dtcadagenciatel date,
+    FOREIGN KEY (fkbanco, fkagencia) REFERENCES agencias (fkbanco, pkagencia),
+    FOREIGN KEY (fktipotelefone) REFERENCES tableName (pktipotelefone)
 );
 ALTER TABLE public.agenciastels OWNER TO postgres;
 COMMENT ON TABLE public.agenciastels IS 'Registro dos telefones de cada autor de publicação.';
@@ -77,10 +82,35 @@ COMMENT ON COLUMN public.agenciastels.nutelefone IS 'Data de geração do regist
 COMMENT ON COLUMN public.agenciastels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.agenciastels.dtcadagenciatel IS 'Data de geração do registro.';
 
+-- Name: aplicacoesdascontas; Type : TABLE: Schema: public; Owner: postgres
+CREATE TABLE public.aplicacoesdascontas (
+    pknuaplicacaodaconta serial PRIMARY KEY,
+    fkaplicacaofinanceira integer not null ,
+    fkbanco character(3) not null,
+    fkagencia character(6) not null, 
+    fkconta character(6) not null, 
+    vltaxaaplicacaoconta double precision not null, 
+    vlsaldo real not null, 
+    dtlancamentoinicial date not null, 
+    dtcadaplicconta date not null, 
+    FOREIGN KEY (fkaplicacaofinanceira) REFERENCES aplicacoesfinanceiras (pkaplicacaofinanceira),
+    FOREIGN KEY (fkbanco, fkagencia, fkconta) REFERENCES contas (fkbanco, fkagencia, pknuconta)
+);
+ALTER TABLE public.aplicacoesdascontas OWNER TO postgres;
+COMMENT ON TABLE public.aplicacoesdascontas IS 'Registro das aplicações financeiras de cada conta de funcionarios. É o desmembramento de um relacionamento N:M. Tem uma Chave candidata composta.';
+COMMENT ON COLUMN public.aplicacoesdascontas.pknuaplicacaodaconta IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
+COMMENT ON COLUMN public.aplicacoesdascontas.fkaplicacaofinanceira IS 'FK para a tabela aplicacoesfinanceiras.';
+COMMENT ON COLUMN public.aplicacoesdascontas.fkbanco IS 'FK (composta) da tabela Contas (das Agências de Bancos).';
+COMMENT ON COLUMN public.aplicacoesdascontas.fkagencia IS 'FK (composta) da tabela Contas (das Agências de Bancos - pode conter letras).';
+COMMENT ON COLUMN public.aplicacoesdascontas.fkconta IS 'FK (composta) da tabela Contas (das Agências de Bancos - pode ter letras).';
+COMMENT ON COLUMN public.aplicacoesdascontas.vltaxaaplicacaoconta IS 'Valor da Taxa de Retorno da Aplicação na conta.';
+COMMENT ON COLUMN public.aplicacoesdascontas.vlsaldo IS 'Valor da Aplicação da conta.';
+COMMENT ON COLUMN public.aplicacoesdascontas.dtlancamentoinicial IS 'Data de lançamento inicial de valor na aplicação financeira da conta.';
+COMMENT ON COLUMN public.aplicacoesdascontas.dtcadaplicconta IS 'Data de geração do registro';
 
 -- Name: aplicacoesfinanceiras; Type: TABLE; Schema: public; Owner: postgres
-CREATE TABLE public.aplicacoesfinanceiras (
-    pkaplicacaofinanceira smallint NOT NULL,
+CREATE TABLE public.aplicacoesfinanceiras ( 
+    pkaplicacaofinanceira smallint PRIMARY KEY,
     txnomeaplicacao character varying(250) NOT NULL,
     txregrasdaaplicacao text,
     vlmintaxaderetorno double precision,
