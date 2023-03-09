@@ -1,13 +1,11 @@
 version: '3'
 services:
   postgresjm:
-    image: "postgres"
+    image: "postgres:15.2-alpine"
     restart: always
     environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_USER=adam
-      - POSTGRES_PASSWORD=adam
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=IAMTHEONE@123
       - POSTGRES_DB=lab_bd
     ports:
       - "5400:5432"
