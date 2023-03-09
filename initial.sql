@@ -28,7 +28,7 @@ SET row_security = off;
 -- Name: public; Type: SCHEMA; Schema: -; Owner: root
 
 -- *not* creating schema, since initdb creates it
-CREATE USER root SUPERUSER WITH PASSWORD 'IAMTHEONE@!';
+CREATE USER root WITH SUPERUSER PASSWORD 'IAMTHEONE@!';
 ALTER SCHEMA public OWNER TO root;
 
 SET default_tablespace = '';
