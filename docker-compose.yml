@@ -4,7 +4,7 @@ services:
     image: "postgres"
     restart: always
     environment:
-      - POSTGRES_USER=root
+      - POSTGRES_USER=admiro
       - POSTGRES_PASSWORD=IAMTHEONE@!
       - POSTGRES_DB=lab_bd
     ports:
