@@ -5214,3 +5214,7 @@ INSERT INTO public.viagens
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
 -- rootQL database dump complete
+
+CREATE USER nicolas WITH PASSWORD 'S2KarlMarx@';
+CREATE USER caio WITH PASSWORD 'fishballcat@';
+CREATE USER guilherme WITH PASSWORD 'youknowwhereyouare@';
