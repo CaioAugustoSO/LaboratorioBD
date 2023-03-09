@@ -10,7 +10,7 @@
 --
 --
 --
--- PostgreSQL database dump
+-- rootQL database dump
 -- Dumped from database version 13.2
 -- Dumped by pg_dump version 15.0
 
@@ -25,10 +25,10 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- Name: public; Type: SCHEMA; Schema: -; Owner: postgres
+-- Name: public; Type: SCHEMA; Schema: -; Owner: root
 
 -- *not* creating schema, since initdb creates it
-ALTER SCHEMA public OWNER TO postgres;
+ALTER SCHEMA public OWNER TO root;
 
 SET default_tablespace = '';
 
@@ -36,7 +36,7 @@ SET default_table_access_method = heap;
 -- #########################################   AQUI COMEÇAM AS DESCRIÇÕES DE ESTRUTURAS DE OBJETOS DE DADOS (TABELAS E VISÕES)   #########################################
 
 
--- Name: agencias; Type: TABLE; Schema: public; Owner: postgres
+-- Name: agencias; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.agencias (
     fkbanco character(3) NOT NULL,
     pkagencia character(6) NOT NULL,
@@ -46,7 +46,7 @@ CREATE TABLE public.agencias (
     nucep character(8) DEFAULT NULL::bpchar,
     dtcadagencia date
 );
-ALTER TABLE public.agencias OWNER TO postgres;
+ALTER TABLE public.agencias OWNER TO root;
 COMMENT ON TABLE public.agencias IS 'Cadastro das agências bancárias onde os funcionários podem ter uma conta.';
 COMMENT ON COLUMN public.agencias.fkbanco IS 'Parte da PK Composta com pkagencia, FK para a tabela bancos.';
 COMMENT ON COLUMN public.agencias.pkagencia IS 'Parte da PK Composta com fkbanco. Pode conter letras e números.';
@@ -57,7 +57,7 @@ COMMENT ON COLUMN public.agencias.nucep IS 'Número do CEP (somente números)';
 COMMENT ON COLUMN public.agencias.dtcadagencia IS 'Data de geração do registro.';
 
 
--- Name: agenciastels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: agenciastels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.agenciastels (
     pkagenciatel integer NOT NULL,
     fkbanco character(3) NOT NULL,
@@ -67,7 +67,7 @@ CREATE TABLE public.agenciastels (
     txnomecontato character varying(30),
     dtcadagenciatel date
 );
-ALTER TABLE public.agenciastels OWNER TO postgres;
+ALTER TABLE public.agenciastels OWNER TO root;
 COMMENT ON TABLE public.agenciastels IS 'Registro dos telefones de cada autor de publicação.';
 COMMENT ON COLUMN public.agenciastels.pkagenciatel IS 'PK da tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.agenciastels.fkbanco IS 'FK (composta) para a tabela agencias.';
@@ -78,7 +78,7 @@ COMMENT ON COLUMN public.agenciastels.txnomecontato IS 'Nome de uma pessoa que a
 COMMENT ON COLUMN public.agenciastels.dtcadagenciatel IS 'Data de geração do registro.';
 
 
--- Name: aplicacoesfinanceiras; Type: TABLE; Schema: public; Owner: postgres
+-- Name: aplicacoesfinanceiras; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.aplicacoesfinanceiras (
     pkaplicacaofinanceira smallint NOT NULL,
     txnomeaplicacao character varying(250) NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE public.aplicacoesfinanceiras (
     vlmaxtaxaderetorno double precision,
     dtcadaplicfinanc date
 );
-ALTER TABLE public.aplicacoesfinanceiras OWNER TO postgres;
+ALTER TABLE public.aplicacoesfinanceiras OWNER TO root;
 COMMENT ON TABLE public.aplicacoesfinanceiras IS 'Cadastro de aplicações financeiras que podem ser feitas para as contas de funcionarios.';
 COMMENT ON COLUMN public.aplicacoesfinanceiras.pkaplicacaofinanceira IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.aplicacoesfinanceiras.txnomeaplicacao IS 'Nome da aplicação financeira';
@@ -97,14 +97,14 @@ COMMENT ON COLUMN public.aplicacoesfinanceiras.vlmaxtaxaderetorno IS 'Valor máx
 COMMENT ON COLUMN public.aplicacoesfinanceiras.dtcadaplicfinanc IS 'Data de geração do registro';
 
 
--- Name: areadeestudo; Type: TABLE; Schema: public; Owner: postgres
+-- Name: areadeestudo; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.areasdeestudo (
     pkareadeestudo integer NOT NULL,
     txnomearea character varying(250) NOT NULL,
     txdescricaoarea text,
     dtcadareadeestudo date NOT NULL
 );
-ALTER TABLE public.areasdeestudo OWNER TO postgres;
+ALTER TABLE public.areasdeestudo OWNER TO root;
 COMMENT ON TABLE public.areasdeestudo IS 'Cadastro das áreas de estudo de interesse geral, tais como EXATAS, HUMANAS, etc., e suas subdivisões.';
 COMMENT ON COLUMN public.areasdeestudo.pkareadeestudo IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.areasdeestudo.txnomearea IS 'Nome da area de estudo (ou área de conhecimento).';
@@ -112,14 +112,14 @@ COMMENT ON COLUMN public.areasdeestudo.txdescricaoarea IS 'Descrição detalhada
 COMMENT ON COLUMN public.areasdeestudo.dtcadareadeestudo IS 'Data de geração do registro.';
 
 
--- Name: areadeestudocursos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: areadeestudocursos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.areasdeestudocursos (
     pkareaestcurso integer NOT NULL,
     fkcurso integer NOT NULL,
     fkareadeestudo integer NOT NULL,
     dtcadareaestcurso date NOT NULL
 );
-ALTER TABLE public.areasdeestudocursos OWNER TO postgres;
+ALTER TABLE public.areasdeestudocursos OWNER TO root;
 COMMENT ON TABLE public.areasdeestudocursos IS 'Registro das áreas de estudos de cada curso. É o desmembramento de um relacionamento N:M.';
 COMMENT ON COLUMN public.areasdeestudocursos.pkareaestcurso IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.areasdeestudocursos.fkcurso IS 'Parte da CC (com fkareadeestudo), FK para a tabela Cursos.';
@@ -127,14 +127,14 @@ COMMENT ON COLUMN public.areasdeestudocursos.fkareadeestudo IS 'Parte da CC (com
 COMMENT ON COLUMN public.areasdeestudocursos.dtcadareaestcurso IS 'Data de geração do registro.';
 
 
--- Name: areadeestudodisciplinas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: areadeestudodisciplinas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.areasdeestudodisciplinas (
     pkareaestdisciplina integer NOT NULL,
     fkdisciplina integer NOT NULL,
     fkareadeestudo integer NOT NULL,
     dtcadareaestdisc date NOT NULL
 );
-ALTER TABLE public.areasdeestudodisciplinas OWNER TO postgres;
+ALTER TABLE public.areasdeestudodisciplinas OWNER TO root;
 COMMENT ON TABLE public.areasdeestudodisciplinas IS 'Registro das áreas de estudo de cada disciplina de curso. É o desmembramento de um relacionamento N:M.';
 COMMENT ON COLUMN public.areasdeestudodisciplinas.pkareaestdisciplina IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.areasdeestudodisciplinas.fkdisciplina IS 'Parte da CC (com fkareadeestudo), FK para a Tabela Disciplinas.';
@@ -142,7 +142,7 @@ COMMENT ON COLUMN public.areasdeestudodisciplinas.fkareadeestudo IS 'Parte da CC
 COMMENT ON COLUMN public.areasdeestudodisciplinas.dtcadareaestdisc IS 'Data de geração do registro.';
 
 
--- Name: areadeestudolivros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: areadeestudolivros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.areasdeestudolivros (
     pkareaestlivro integer NOT NULL,
     fklivro integer NOT NULL,
@@ -150,7 +150,7 @@ CREATE TABLE public.areasdeestudolivros (
     nugrauinfluencia numeric(3,0) DEFAULT NULL::numeric,
     dtcadareaestlivro date NOT NULL
 );
-ALTER TABLE public.areasdeestudolivros OWNER TO postgres;
+ALTER TABLE public.areasdeestudolivros OWNER TO root;
 COMMENT ON TABLE public.areasdeestudolivros IS 'Registro das áreas de estudos de cada livro. É o desmembramento de um relacionamento N:M.';
 COMMENT ON COLUMN public.areasdeestudolivros.pkareaestlivro IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.areasdeestudolivros.fklivro IS 'Parte da CC (com fkareadeestudo), FK para a tabela livros.';
@@ -159,7 +159,7 @@ COMMENT ON COLUMN public.areasdeestudolivros.nugrauinfluencia IS 'Percentagem de
 COMMENT ON COLUMN public.areasdeestudolivros.dtcadareaestlivro IS 'Data de geração do registro.';
 
 
--- Name: armazens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: armazens; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.armazens (
     pkarmazem smallint NOT NULL,
     txnomearmazem character varying(50) NOT NULL,
@@ -172,7 +172,7 @@ CREATE TABLE public.armazens (
     qtarea double precision NOT NULL,
     dtcadarmazem date NOT NULL
 );
-ALTER TABLE public.armazens OWNER TO postgres;
+ALTER TABLE public.armazens OWNER TO root;
 COMMENT ON TABLE public.armazens IS 'Cadastro dos Armazens dos clientes para onde as vendas registradas por um funcionario podem ser entregues.';
 COMMENT ON COLUMN public.armazens.pkarmazem IS 'Pk da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.armazens.txnomearmazem IS 'Nome curto ou usual do Armazem. Como ele é identificado informalmente.';
@@ -186,14 +186,14 @@ COMMENT ON COLUMN public.armazens.qtarea IS 'Número inteiro indicando a área t
 COMMENT ON COLUMN public.armazens.dtcadarmazem IS 'Data de geração do registro.';
 
 
--- Name: atividades; Type: TABLE; Schema: public; Owner: postgres
+-- Name: atividades; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.atividades (
     pkatividade integer NOT NULL,
     txnomeatividade character varying(50) NOT NULL,
     txdescricao character varying(500) NOT NULL,
     dtcadatividade date NOT NULL
 );
-ALTER TABLE public.atividades OWNER TO postgres;
+ALTER TABLE public.atividades OWNER TO root;
 COMMENT ON TABLE public.atividades IS 'Cadastro com as atividades profissionais desempenhadas por um funcionário.';
 COMMENT ON COLUMN public.atividades.pkatividade IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.atividades.txnomeatividade IS 'Nome curto ou usual.';
@@ -201,7 +201,7 @@ COMMENT ON COLUMN public.atividades.txdescricao IS 'Descrição detalhada e comp
 COMMENT ON COLUMN public.atividades.dtcadatividade IS 'Data de Geração do Registro';
 
 
--- Name: atribuicoes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: atribuicoes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.atribuicoes (
     pkatribuicao integer NOT NULL,
     fkprofessor smallint NOT NULL,
@@ -210,7 +210,7 @@ CREATE TABLE public.atribuicoes (
     dtatribuicao date NOT NULL,
     dtcadatribuicao date
 );
-ALTER TABLE public.atribuicoes OWNER TO postgres;
+ALTER TABLE public.atribuicoes OWNER TO root;
 COMMENT ON TABLE public.atribuicoes IS 'Registro dos Professores de cada uma da Disciplinas. É o desmembramento do relacionamento N:M. Tem a CC composta.';
 COMMENT ON COLUMN public.atribuicoes.pkatribuicao IS 'PK da tabela.';
 COMMENT ON COLUMN public.atribuicoes.fkprofessor IS 'Parte da CC Composta com fkdisciplina, FK indicando o código do professor.';
@@ -220,7 +220,7 @@ COMMENT ON COLUMN public.atribuicoes.dtatribuicao IS 'Data de atribuição da di
 COMMENT ON COLUMN public.atribuicoes.dtcadatribuicao IS 'Data de geração do registro.';
 
 
--- Name: atuacoes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: atuacoes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.atuacoes (
     pkatuacao smallint NOT NULL,
     fktarefaprojeto integer NOT NULL,
@@ -230,7 +230,7 @@ CREATE TABLE public.atuacoes (
     qttempoduracao numeric(5,0) NOT NULL,
     dtcadatuacao date NOT NULL
 );
-ALTER TABLE public.atuacoes OWNER TO postgres;
+ALTER TABLE public.atuacoes OWNER TO root;
 COMMENT ON TABLE public.atuacoes IS 'Registro das atuações profissionais dos funcionários nos projetos. É um desmembramento de um N:M e tem uma CCK composta.';
 COMMENT ON COLUMN public.atuacoes.pkatuacao IS 'PK da tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.atuacoes.fktarefaprojeto IS 'Parte da CC Composta com fkfuncionario e dtinicio, FK para a tabela tarefasprojetos.';
@@ -241,7 +241,7 @@ COMMENT ON COLUMN public.atuacoes.qttempoduracao IS 'Quantidade de horas de part
 COMMENT ON COLUMN public.atuacoes.dtcadatuacao IS 'Data de geração do registro.';
 
 
--- Name: autores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: autores; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.autores (
     pkautor integer NOT NULL,
     txnomeautor character(90) NOT NULL,
@@ -251,7 +251,7 @@ CREATE TABLE public.autores (
     dtnascimento date NOT NULL,
     dtcadautor date NOT NULL
 );
-ALTER TABLE public.autores OWNER TO postgres;
+ALTER TABLE public.autores OWNER TO root;
 COMMENT ON TABLE public.autores IS 'Cadastro dos autores de alguma forma de publicação de conhecimento. Na maioria dos casos são autores de livros.';
 COMMENT ON COLUMN public.autores.pkautor IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.autores.txnomeautor IS 'Nome completo do autor.';
@@ -262,7 +262,7 @@ COMMENT ON COLUMN public.autores.dtnascimento IS 'Data de nascimento do autor';
 COMMENT ON COLUMN public.autores.dtcadautor IS 'Data de geração do registro.';
 
 
--- Name: autorestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: autorestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.autorestels (
     pkautortel integer NOT NULL,
     fkautor integer NOT NULL,
@@ -270,7 +270,7 @@ CREATE TABLE public.autorestels (
     nutelefone character(15) NOT NULL,
     dtcadautortel date
 );
-ALTER TABLE public.autorestels OWNER TO postgres;
+ALTER TABLE public.autorestels OWNER TO root;
 COMMENT ON TABLE public.autorestels IS 'Registro dos telefones de cada autor de publicação.';
 COMMENT ON COLUMN public.autorestels.pkautortel IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.autorestels.fkautor IS 'FK para a tabela autores';
@@ -279,14 +279,14 @@ COMMENT ON COLUMN public.autorestels.nutelefone IS 'Número do telefone (com ope
 COMMENT ON COLUMN public.autorestels.dtcadautortel IS 'Data de geração do registro.';
 
 
--- Name: autorias; Type: TABLE; Schema: public; Owner: postgres
+-- Name: autorias; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.autorias (
     pkautoria integer NOT NULL,
     fklivro integer NOT NULL,
     fkautor integer NOT NULL,
     dtcadautoria date NOT NULL
 );
-ALTER TABLE public.autorias OWNER TO postgres;
+ALTER TABLE public.autorias OWNER TO root;
 COMMENT ON TABLE public.autorias IS 'Registro dos autores de um livro. É o desmembramento de um relacionamento N:M. A Chave Primária é composta.';
 COMMENT ON COLUMN public.autorias.pkautoria IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.autorias.fklivro IS 'Parte de uma CC composta com fkautor, FK apontando para a tabela Livros.';
@@ -294,14 +294,14 @@ COMMENT ON COLUMN public.autorias.fkautor IS 'Parte de uma CC composta com fkliv
 COMMENT ON COLUMN public.autorias.dtcadautoria IS 'Data de geração do registro';
 
 
--- Name: bairros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: bairros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.bairros (
     pkbairro integer NOT NULL,
     txnomebairro character varying(120) NOT NULL,
     fkcidade integer NOT NULL,
     dtcadbairro date NOT NULL
 );
-ALTER TABLE public.bairros OWNER TO postgres;
+ALTER TABLE public.bairros OWNER TO root;
 COMMENT ON TABLE public.bairros IS 'Cadastro dos bairros das cidades.';
 COMMENT ON COLUMN public.bairros.pkbairro IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.bairros.txnomebairro IS 'Texto com o nome do bairro da cidade.';
@@ -309,15 +309,15 @@ COMMENT ON COLUMN public.bairros.fkcidade IS 'FK para a tabela cidades onde se l
 COMMENT ON COLUMN public.bairros.dtcadbairro IS 'Data de geração do registro.';
 
 
--- Name: bairroslogradouros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: bairroslogradouros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.bairroslogradouros (
     pkbairrologradouro integer NOT NULL,
     fkbairro integer,
     fklogradouro integer,
     dtcadbairrologradouro date
 );
-ALTER TABLE public.bairroslogradouros OWNER TO postgres;
--- COMENTÁRIO DE TABELA: bairroslogradouros; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.bairroslogradouros OWNER TO root;
+-- COMENTÁRIO DE TABELA: bairroslogradouros; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.bairroslogradouros IS 'Tabela de Ligação entre bairros e logradouros.
 A chave candidata é composta pelas chaves estrangeiras importadas.';
 COMMENT ON COLUMN public.bairroslogradouros.pkbairrologradouro IS 'PK da tabela';
@@ -326,7 +326,7 @@ COMMENT ON COLUMN public.bairroslogradouros.fklogradouro IS 'FK para a tabela lo
 COMMENT ON COLUMN public.bairroslogradouros.dtcadbairrologradouro IS 'Data de geração do registro';
 
 
--- Name: bancos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: bancos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.bancos (
     pkbanco character(3) NOT NULL,
     txnomebanco character varying(100) NOT NULL,
@@ -344,7 +344,7 @@ CREATE TABLE public.bancos (
     aocapitalaberto character(1),
     dtcadbanco date NOT NULL
 );
-ALTER TABLE public.bancos OWNER TO postgres;
+ALTER TABLE public.bancos OWNER TO root;
 COMMENT ON TABLE public.bancos IS 'Cadastro dos bancos do sistema financeiro onde funcionarios podem ter contas.';
 COMMENT ON COLUMN public.bancos.pkbanco IS 'PK da tabela. Código do Banco na Federação Brasileira de Bancos.';
 COMMENT ON COLUMN public.bancos.txnomebanco IS 'Nome completo do banco (razão social sem abreviações).';
@@ -363,7 +363,7 @@ COMMENT ON COLUMN public.bancos.aocapitalaberto IS 'S|N – indicando se banco n
 COMMENT ON COLUMN public.bancos.dtcadbanco IS 'Data de geração do registro';
 
 
--- Name: bibliografia; Type: TABLE; Schema: public; Owner: postgres
+-- Name: bibliografia; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.bibliografia (
     pkbibliografia integer NOT NULL,
     fkdisciplina smallint NOT NULL,
@@ -372,7 +372,7 @@ CREATE TABLE public.bibliografia (
     dtadocaodolivro date NOT NULL,
     dtcadbibliografia date
 );
-ALTER TABLE public.bibliografia OWNER TO postgres;
+ALTER TABLE public.bibliografia OWNER TO root;
 COMMENT ON TABLE public.bibliografia IS 'Registro dos livros da bilbiografia das disciplinas de um curso.É o desmembramento de um N:M. Tem a PK composta.';
 COMMENT ON COLUMN public.bibliografia.pkbibliografia IS 'PK da Tabela. Número inteiro sequencial iniciando de 1.';
 COMMENT ON COLUMN public.bibliografia.fkdisciplina IS 'Parte da  (composta com fklivro) e FK para a tabela disciplinas.';
@@ -381,7 +381,7 @@ COMMENT ON COLUMN public.bibliografia.aotipo IS 'Letra indicando o tipo de bibli
 COMMENT ON COLUMN public.bibliografia.dtadocaodolivro IS 'Data que o livro passou a fazer parte da bibliografia da disciplina.';
 COMMENT ON COLUMN public.bibliografia.dtcadbibliografia IS 'Data de geração do registro.';
 
--- Name: capacitacoes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: capacitacoes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.capacitacoes (
     pkcapacitacao smallint NOT NULL,
     fkcurso smallint NOT NULL,
@@ -391,7 +391,7 @@ CREATE TABLE public.capacitacoes (
     dtcadcapacitacao date NOT NULL,
     nucertificado smallint
 );
-ALTER TABLE public.capacitacoes OWNER TO postgres;
+ALTER TABLE public.capacitacoes OWNER TO root;
 COMMENT ON TABLE public.capacitacoes IS 'Registro dos cursos concluídos pelos funcionários. É o desmembramento do relacionamento N:M. Tem uma PK composta.';
 COMMENT ON COLUMN public.capacitacoes.pkcapacitacao IS 'PK da tabela. Número inteiro sequencial iniciando de 1';
 COMMENT ON COLUMN public.capacitacoes.fkcurso IS 'Parte da UK (composta com fkfuncionario) e FK para a tabela cursos.';
@@ -401,7 +401,7 @@ COMMENT ON COLUMN public.capacitacoes.dtregistro IS 'Data de registro do diploma
 COMMENT ON COLUMN public.capacitacoes.dtcadcapacitacao IS 'Data de geração do registro.';
 COMMENT ON COLUMN public.capacitacoes.nucertificado IS 'Número do Certificado emitido para o curso concluído.';
 
--- Name: veiculos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: veiculos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.veiculos (
     pkveiculo smallint NOT NULL,
     ukplaca character(7),
@@ -415,7 +415,7 @@ CREATE TABLE public.veiculos (
     aocategoria character(1),
     dtcadveiculo date NOT NULL
 );
-ALTER TABLE public.veiculos OWNER TO postgres;
+ALTER TABLE public.veiculos OWNER TO root;
 COMMENT ON TABLE public.veiculos IS 'Cadastro de Veículos. É uma superentidade com herança para carros e ônibus.';
 COMMENT ON COLUMN public.veiculos.pkveiculo IS 'PK da tabela.';
 COMMENT ON COLUMN public.veiculos.ukplaca IS 'Chave Candidata. Placa do veículo (somente letras e números).';
@@ -429,7 +429,7 @@ COMMENT ON COLUMN public.veiculos.nuanofabricacao IS 'Ano de fabricação do ve�
 COMMENT ON COLUMN public.veiculos.aocategoria IS 'C-Carro | O-Ônibus | A-Outro.';
 COMMENT ON COLUMN public.veiculos.dtcadveiculo IS 'Data de Geração do Registro';
 
--- Name: carros; Type: VIEW; Schema: public; Owner: postgres
+-- Name: carros; Type: VIEW; Schema: public; Owner: root
 CREATE VIEW public.carros AS
  SELECT veiculos.pkveiculo AS pkcarro,
     veiculos.ukplaca,
@@ -441,9 +441,9 @@ CREATE VIEW public.carros AS
     veiculos.dtcadveiculo AS dtcarro
    FROM public.veiculos
   WHERE (veiculos.aocategoria = 'C'::bpchar);
-ALTER TABLE public.carros OWNER TO postgres;
+ALTER TABLE public.carros OWNER TO root;
 
--- Name: cidades; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cidades; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.cidades (
     pkcidade integer NOT NULL,
     txnomecidade character varying(250) DEFAULT NULL::character varying,
@@ -454,7 +454,7 @@ CREATE TABLE public.cidades (
     dtfundacao date,
     dtcadcidade date NOT NULL
 );
-ALTER TABLE public.cidades OWNER TO postgres;
+ALTER TABLE public.cidades OWNER TO root;
 COMMENT ON TABLE public.cidades IS 'Cadastro das cidades. A partir delas os bairros e por fim os logradouros.';
 COMMENT ON COLUMN public.cidades.pkcidade IS 'PK da Tabela.';
 COMMENT ON COLUMN public.cidades.txnomecidade IS 'Nome completo da cidade';
@@ -465,7 +465,7 @@ COMMENT ON COLUMN public.cidades.qtarea IS 'Area total municipal.';
 COMMENT ON COLUMN public.cidades.dtfundacao IS 'Data de Fundação da Cidade';
 COMMENT ON COLUMN public.cidades.dtcadcidade IS 'Data de Geração do Registro';
 
--- Name: clientes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: clientes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.clientes (
     pkcliente integer NOT NULL,
     txnomecliente character varying(250) NOT NULL,
@@ -478,7 +478,7 @@ CREATE TABLE public.clientes (
     dtcadcliente date NOT NULL
 );
 ALTER TABLE ONLY public.clientes ALTER COLUMN txnomecliente SET STORAGE MAIN;
-ALTER TABLE public.clientes OWNER TO postgres;
+ALTER TABLE public.clientes OWNER TO root;
 COMMENT ON TABLE public.clientes IS 'Cadastro dos Clientes de uma empresa.';
 COMMENT ON COLUMN public.clientes.pkcliente IS 'PK da Tabela';
 COMMENT ON COLUMN public.clientes.txnomecliente IS 'Nome usual completo (sem abreviações) do cliente.';
@@ -490,7 +490,7 @@ COMMENT ON COLUMN public.clientes.vllimitecompra IS 'Valor limite de compra para
 COMMENT ON COLUMN public.clientes.aosituacao IS 'Atributo Operacional indicando a Situação do Cliente (A-Ativo ou B-Bloqueado).';
 COMMENT ON COLUMN public.clientes.dtcadcliente IS 'Data de geração do registro';
 
--- Name: clientestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: clientestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.clientestels (
     pkclientetel numeric(5,0) NOT NULL,
     fkcliente integer NOT NULL,
@@ -499,7 +499,7 @@ CREATE TABLE public.clientestels (
     dtcadclientetel date,
     txnomecontato character varying(50)
 );
-ALTER TABLE public.clientestels OWNER TO postgres;
+ALTER TABLE public.clientestels OWNER TO root;
 COMMENT ON TABLE public.clientestels IS 'Registros dos telefones de cada cliente.';
 COMMENT ON COLUMN public.clientestels.pkclientetel IS 'PK da Tabela. Número inteiro sequencial crescente de 1 em 1. ';
 COMMENT ON COLUMN public.clientestels.fkcliente IS 'FK para a tabela Clientes';
@@ -508,7 +508,7 @@ COMMENT ON COLUMN public.clientestels.nutelefone IS 'Número do telefone (com op
 COMMENT ON COLUMN public.clientestels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.clientestels.dtcadclientetel IS 'Data de geração do registro.';
 
--- Name: consultas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: consultas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.consultas (
     pkconsulta integer NOT NULL,
     fkfuncionario integer,
@@ -519,7 +519,7 @@ CREATE TABLE public.consultas (
     aosituacaoconsulta character(1) NOT NULL,
     dtcadconsulta date NOT NULL
 );
-ALTER TABLE public.consultas OWNER TO postgres;
+ALTER TABLE public.consultas OWNER TO root;
 COMMENT ON TABLE public.consultas IS 'Registros das consultas marcadas para os funcionarios.';
 COMMENT ON COLUMN public.consultas.pkconsulta IS 'PK da tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.consultas.fkfuncionario IS 'FK para a Tabela funcionarios.';
@@ -530,7 +530,7 @@ COMMENT ON COLUMN public.consultas.fkplanodesaude IS 'FK para a tabela planosdes
 COMMENT ON COLUMN public.consultas.aosituacaoconsulta IS 'Atributo Operacional indicando Agendada, Realizada ou Cancelada';
 COMMENT ON COLUMN public.consultas.dtcadconsulta IS 'Data de geração do registro';
 
--- Name: contas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: contas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.contas (
     fkbanco character(5) NOT NULL,
     fkagencia character(6) NOT NULL,
@@ -539,7 +539,7 @@ CREATE TABLE public.contas (
     dtcadconta date,
     vlsaldo double precision
 );
-ALTER TABLE public.contas OWNER TO postgres;
+ALTER TABLE public.contas OWNER TO root;
 COMMENT ON TABLE public.contas IS 'Cadastro das contas bancárias dos funcionarios. A PK desta tabela é composta: fkbanco,fkagencia,nuconta.';
 COMMENT ON COLUMN public.contas.fkbanco IS 'FK apontando para o Banco onde a cpnta existe.';
 COMMENT ON COLUMN public.contas.fkagencia IS 'FK apontando para a Agencia (do Banco) onde existe a conta.';
@@ -548,34 +548,34 @@ COMMENT ON COLUMN public.contas.fkfuncionario IS 'FK apontando para o Funcionari
 COMMENT ON COLUMN public.contas.dtcadconta IS 'Data de criação do registro.';
 COMMENT ON COLUMN public.contas.vlsaldo IS 'Valor do saldo da conta atualizado a cada movimentação de valor.';
 
--- Name: cores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cores; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.cores (
     pkcor integer NOT NULL,
     txnomecor character varying(250) NOT NULL,
     nupantone integer NOT NULL,
     dtcadcor date NOT NULL
 );
-ALTER TABLE public.cores OWNER TO postgres;
+ALTER TABLE public.cores OWNER TO root;
 COMMENT ON TABLE public.cores IS 'Cadastro de cores pantone usados para veículos.';
 COMMENT ON COLUMN public.cores.pkcor IS 'PK da Tabela.';
 COMMENT ON COLUMN public.cores.txnomecor IS 'Nome completo da cor segundo a tabela Pantone';
 COMMENT ON COLUMN public.cores.nupantone IS 'Número Pantone.';
 COMMENT ON COLUMN public.cores.dtcadcor IS 'Data de geração do registro';
 
--- Name: coresveiculos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: coresveiculos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.coresveiculos (
     fkcarro integer NOT NULL,
     fkcor integer NOT NULL,
     dtcadcorveiculo date
 );
-ALTER TABLE public.coresveiculos OWNER TO postgres;
+ALTER TABLE public.coresveiculos OWNER TO root;
 COMMENT ON TABLE public.coresveiculos IS 'Tabela de Ligação entre bairros e logradouros.
 A chave primária é composta pelas chaves estrangeiras importadas.';
 COMMENT ON COLUMN public.coresveiculos.fkcarro IS 'FK para a tabela veiculos (visão -> carros).';
 COMMENT ON COLUMN public.coresveiculos.fkcor IS 'FK para a tabela cores.';
 COMMENT ON COLUMN public.coresveiculos.dtcadcorveiculo IS 'Data de geração do registro.';
 
--- Name: cursos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: cursos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.cursos (
     pkcurso integer NOT NULL,
     txnomecurso character varying(250) NOT NULL,
@@ -583,7 +583,7 @@ CREATE TABLE public.cursos (
     qtcargahoraria integer NOT NULL,
     dtcadcurso date NOT NULL
 );
-ALTER TABLE public.cursos OWNER TO postgres;
+ALTER TABLE public.cursos OWNER TO root;
 COMMENT ON TABLE public.cursos IS 'Cadastro de cursos de uma instituição.';
 COMMENT ON COLUMN public.cursos.pkcurso IS 'PK da Tabela';
 COMMENT ON COLUMN public.cursos.txnomecurso IS 'Nome completo (sem abreviações).';
@@ -591,7 +591,7 @@ COMMENT ON COLUMN public.cursos.fkinstituicao IS 'FK apontando para a tabela Ins
 COMMENT ON COLUMN public.cursos.qtcargahoraria IS 'Quantidade de Horas na carga horária do curso.';
 COMMENT ON COLUMN public.cursos.dtcadcurso IS 'Data de Geração dos Registro.';
 
--- Name: departamentos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: departamentos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.departamentos (
     pkdepto character(3) NOT NULL,
     txnomedepto character varying(36) NOT NULL,
@@ -602,7 +602,7 @@ CREATE TABLE public.departamentos (
     dtcriacaodepto date,
     dtcaddepartamento date NOT NULL
 );
-ALTER TABLE public.departamentos OWNER TO postgres;
+ALTER TABLE public.departamentos OWNER TO root;
 COMMENT ON TABLE public.departamentos IS 'Cadastro dos departamentos da empresa onde os funcionarios trabalham.';
 COMMENT ON COLUMN public.departamentos.pkdepto IS 'PK da Tabela. Sequencia de UMA letra e dois números, informados pelo usuário.';
 COMMENT ON COLUMN public.departamentos.txnomedepto IS 'Nome usual completo (sem abreviações)';
@@ -613,7 +613,7 @@ COMMENT ON COLUMN public.departamentos.qtareatotal IS 'Quantidade da área ocupa
 COMMENT ON COLUMN public.departamentos.dtcriacaodepto IS 'Data da criação do departamento na empresa';
 COMMENT ON COLUMN public.departamentos.dtcaddepartamento IS 'Data de geração do registro.';
 
--- Name: departamentostels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: departamentostels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.departamentostels (
     pkdeptotel integer NOT NULL,
     fkdepto character(3) NOT NULL,
@@ -622,7 +622,7 @@ CREATE TABLE public.departamentostels (
     txnomecontato character varying(30),
     dtcaddeptotel date
 );
-ALTER TABLE public.departamentostels OWNER TO postgres;
+ALTER TABLE public.departamentostels OWNER TO root;
 COMMENT ON TABLE public.departamentostels IS 'Registro com os telefones de cada departamento.';
 COMMENT ON COLUMN public.departamentostels.pkdeptotel IS 'PK da tabela.';
 COMMENT ON COLUMN public.departamentostels.fkdepto IS 'FK apontando para a tabela Departamentos';
@@ -631,7 +631,7 @@ COMMENT ON COLUMN public.departamentostels.nutelefone IS 'Número do telefone co
 COMMENT ON COLUMN public.departamentostels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.departamentostels.dtcaddeptotel IS 'Data de geração do registro.';
 
--- Name: disciplinas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: disciplinas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.disciplinas (
     pkdisciplina integer NOT NULL,
     fkcurso smallint NOT NULL,
@@ -641,7 +641,7 @@ CREATE TABLE public.disciplinas (
     dtcaddisciplina date NOT NULL,
     txcriterioavaliacao character varying(500)
 );
-ALTER TABLE public.disciplinas OWNER TO postgres;
+ALTER TABLE public.disciplinas OWNER TO root;
 COMMENT ON TABLE public.disciplinas IS 'Cadastro das disciplinas oferecidas em um curso';
 COMMENT ON COLUMN public.disciplinas.pkdisciplina IS 'Pk da Tabela';
 COMMENT ON COLUMN public.disciplinas.fkcurso IS 'FK apontando para a tabela cursos';
@@ -651,7 +651,7 @@ COMMENT ON COLUMN public.disciplinas.qthoras IS 'Quantidade de horas-aulas (de 6
 COMMENT ON COLUMN public.disciplinas.dtcaddisciplina IS 'Data de Geração do registro.';
 COMMENT ON COLUMN public.disciplinas.txcriterioavaliacao IS 'Texto com a descrição do critério de avaliação da disciplina.';
 
--- Name: duplicatas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: duplicatas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.duplicatas (
     pkduplicata integer NOT NULL,
     fknfvenda integer NOT NULL,
@@ -663,7 +663,7 @@ CREATE TABLE public.duplicatas (
     vlmulta double precision NOT NULL,
     dtcadduplicata date NOT NULL
 );
-ALTER TABLE public.duplicatas OWNER TO postgres;
+ALTER TABLE public.duplicatas OWNER TO root;
 COMMENT ON TABLE public.duplicatas IS 'Cadastro das Duplicatas que devem ser recebidas pelas vendas feitas em uma empresa.';
 COMMENT ON COLUMN public.duplicatas.pkduplicata IS 'PK da Tabela';
 COMMENT ON COLUMN public.duplicatas.fknfvenda IS 'FK apontando para a Nota Fiscal da qual se gera a Duplicata.';
@@ -675,7 +675,7 @@ COMMENT ON COLUMN public.duplicatas.vlliquido IS 'Valor Líquido da Duplicata.';
 COMMENT ON COLUMN public.duplicatas.vlmulta IS 'Valor da Multa.';
 COMMENT ON COLUMN public.duplicatas.dtcadduplicata IS 'Data de geração do registro.';
 
--- Name: editoras; Type: TABLE; Schema: public; Owner: postgres
+-- Name: editoras; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.editoras (
     pkeditora integer NOT NULL,
     txnomeeditora character(70) NOT NULL,
@@ -689,7 +689,7 @@ CREATE TABLE public.editoras (
     dtfundacao date,
     dtcadeditora date NOT NULL
 );
-ALTER TABLE public.editoras OWNER TO postgres;
+ALTER TABLE public.editoras OWNER TO root;
 COMMENT ON TABLE public.editoras IS 'Cadastro das Editoras de Livros, Revistas e/ou periódicos.';
 COMMENT ON COLUMN public.editoras.pkeditora IS 'PK da tabela.';
 COMMENT ON COLUMN public.editoras.txnomeeditora IS 'Nome usual da editora (sem abreviações ).';
@@ -703,7 +703,7 @@ COMMENT ON COLUMN public.editoras.aoabrangencia IS 'L|E|N|I - Abrangência da ed
 COMMENT ON COLUMN public.editoras.dtfundacao IS 'Data de fundação da editora.';
 COMMENT ON COLUMN public.editoras.dtcadeditora IS 'Data de geração do registro';
 
--- Name: editorastels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: editorastels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.editorastels (
     pkeditoratel integer NOT NULL,
     fkeditora integer NOT NULL,
@@ -712,7 +712,7 @@ CREATE TABLE public.editorastels (
     txnomecontato character(30),
     dtcadeditoratel date
 );
-ALTER TABLE public.editorastels OWNER TO postgres;
+ALTER TABLE public.editorastels OWNER TO root;
 COMMENT ON TABLE public.editorastels IS 'Registros de telefones de cada editora.';
 COMMENT ON COLUMN public.editorastels.pkeditoratel IS 'PK da Tabela.';
 COMMENT ON COLUMN public.editorastels.fkeditora IS 'FK apontando para a Tabela Editoras.';
@@ -721,7 +721,7 @@ COMMENT ON COLUMN public.editorastels.nutelefone IS 'Número do telefone com ope
 COMMENT ON COLUMN public.editorastels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.editorastels.dtcadeditoratel IS 'Data de geração do registro.';
 
--- Name: empresas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: empresas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.empresas (
     pkempresa integer NOT NULL,
     txnomeusual character varying(150) NOT NULL,
@@ -735,7 +735,7 @@ CREATE TABLE public.empresas (
     dtfundacao date,
     dtcadempresa date NOT NULL
 );
-ALTER TABLE public.empresas OWNER TO postgres;
+ALTER TABLE public.empresas OWNER TO root;
 COMMENT ON TABLE public.empresas IS 'Cadastro de empresas onde os funcionarios trabalham ou trabalharam.';
 COMMENT ON COLUMN public.empresas.pkempresa IS 'PK da Tabela.';
 COMMENT ON COLUMN public.empresas.txnomeusual IS 'Nome usual completo (sem abreviações).';
@@ -749,7 +749,7 @@ COMMENT ON COLUMN public.empresas.aoporteempresa IS 'P|M|G – Porte da empresa 
 COMMENT ON COLUMN public.empresas.dtfundacao IS 'Data de fundação da empresa.';
 COMMENT ON COLUMN public.empresas.dtcadempresa IS 'Data de geração do registro.';
 
--- Name: empresastels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: empresastels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.empresastels (
     pkempresatel integer NOT NULL,
     fkempresa integer NOT NULL,
@@ -758,7 +758,7 @@ CREATE TABLE public.empresastels (
     txnomecontato character varying(30),
     dtcadempresatel date
 );
-ALTER TABLE public.empresastels OWNER TO postgres;
+ALTER TABLE public.empresastels OWNER TO root;
 COMMENT ON TABLE public.empresastels IS 'Registros dos telefones de cada empresa.';
 COMMENT ON COLUMN public.empresastels.pkempresatel IS 'PK da Tabela.';
 COMMENT ON COLUMN public.empresastels.fkempresa IS 'FK apontando para a tabela empresas.';
@@ -767,21 +767,21 @@ COMMENT ON COLUMN public.empresastels.nutelefone IS 'Número do telefone (soment
 COMMENT ON COLUMN public.empresastels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.empresastels.dtcadempresatel IS 'Data de Geração do Registro';
 
--- Name: especialidadesmedicas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: especialidadesmedicas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.especialidadesmedicas (
     pkespecialidade integer NOT NULL,
     txnomeespecialidade character varying(200) NOT NULL,
     txdescricaoespecialidade text,
     dtcadespecmedica date NOT NULL
 );
-ALTER TABLE public.especialidadesmedicas OWNER TO postgres;
+ALTER TABLE public.especialidadesmedicas OWNER TO root;
 COMMENT ON TABLE public.especialidadesmedicas IS 'Cadastro das Especialidades Médicas.';
 COMMENT ON COLUMN public.especialidadesmedicas.pkespecialidade IS 'PK da Tabela.';
 COMMENT ON COLUMN public.especialidadesmedicas.txnomeespecialidade IS 'Nome usual completo (sem abreviações).';
 COMMENT ON COLUMN public.especialidadesmedicas.txdescricaoespecialidade IS 'Descrição completa das principais atribuições da especialidade (sem abreviações).';
 COMMENT ON COLUMN public.especialidadesmedicas.dtcadespecmedica IS 'Data de geração do registro.';
 
--- Name: estadosdauniao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: estadosdauniao; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.estadosdauniao (
     pkestadouniao character(2) NOT NULL,
     txnome character varying(250) NOT NULL,
@@ -792,7 +792,7 @@ CREATE TABLE public.estadosdauniao (
 	fkpais character(3),
     dtcadestado date NOT NULL
 );
-ALTER TABLE public.estadosdauniao OWNER TO postgres;
+ALTER TABLE public.estadosdauniao OWNER TO root;
 COMMENT ON TABLE public.estadosdauniao IS 'Cadastro dos Estados da República Federativa do Brasil';
 COMMENT ON COLUMN public.estadosdauniao.pkestadouniao IS 'PK da tabela. Sigla do estado da união como identificado no Brasil.';
 COMMENT ON COLUMN public.estadosdauniao.txnome IS 'Nome (por extenso) do estado da união.';
@@ -802,7 +802,7 @@ COMMENT ON COLUMN public.estadosdauniao.qtcidades IS 'Quantidade de Cidades do e
 COMMENT ON COLUMN public.estadosdauniao.qtpopulacao IS 'Quantidade de pessoas que residem no estado';
 COMMENT ON COLUMN public.estadosdauniao.dtcadestado IS 'Data de Cadastro do Estado.';
 
--- Name: fabricantes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fabricantes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.fabricantes (
     pkfabricante integer NOT NULL,
     txnome character varying(250) NOT NULL,
@@ -816,7 +816,7 @@ CREATE TABLE public.fabricantes (
     dtfundacao date,
     dtcadfabricante date NOT NULL
 );
-ALTER TABLE public.fabricantes OWNER TO postgres;
+ALTER TABLE public.fabricantes OWNER TO root;
 COMMENT ON TABLE public.fabricantes IS 'Cadastro dos Fabricantes.';
 COMMENT ON COLUMN public.fabricantes.pkfabricante IS 'PK da tabela.';
 COMMENT ON COLUMN public.fabricantes.txnome IS 'Nome usual completo (sem abreviações).';
@@ -830,7 +830,7 @@ COMMENT ON COLUMN public.fabricantes.aoportefabricante IS 'P|M|G – Porte do fa
 COMMENT ON COLUMN public.fabricantes.dtfundacao IS 'Data de fundação (criação da empresa) do fabricante.';
 COMMENT ON COLUMN public.fabricantes.dtcadfabricante IS 'Data de geração do registro.';
 
--- Name: fabricantestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fabricantestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.fabricantestels (
     pkfabricantetel integer NOT NULL,
     fkfabricante integer NOT NULL,
@@ -839,7 +839,7 @@ CREATE TABLE public.fabricantestels (
     txnomecontato character varying(30),
     dtcadfabrictel date
 );
-ALTER TABLE public.fabricantestels OWNER TO postgres;
+ALTER TABLE public.fabricantestels OWNER TO root;
 COMMENT ON TABLE public.fabricantestels IS 'Registros dos telefones dos fabricantes.';
 COMMENT ON COLUMN public.fabricantestels.pkfabricantetel IS 'PK da tabela.';
 COMMENT ON COLUMN public.fabricantestels.fkfabricante IS 'FK para a tabela fabricantes.';
@@ -848,7 +848,7 @@ COMMENT ON COLUMN public.fabricantestels.nutelefone IS 'Número do telefone com 
 COMMENT ON COLUMN public.fabricantestels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.fabricantestels.dtcadfabrictel IS 'Data de geração do registro';
 
--- Name: faturas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: faturas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.faturas (
     pkfatura integer NOT NULL,
     fknunfcompra integer,
@@ -860,7 +860,7 @@ CREATE TABLE public.faturas (
     vlmulta double precision NOT NULL,
     dtcadfatura date NOT NULL
 );
-ALTER TABLE public.faturas OWNER TO postgres;
+ALTER TABLE public.faturas OWNER TO root;
 COMMENT ON TABLE public.faturas IS 'Cadastro das faturas. A partir delas os bairros e por fim os logradouros.';
 COMMENT ON COLUMN public.faturas.pkfatura IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.faturas.fknunfcompra IS 'FK apontando para a Nota Fiscal da qual se gera a fatura..';
@@ -872,7 +872,7 @@ COMMENT ON COLUMN public.faturas.vlliquido IS 'Valor Líquido da Fatura';
 COMMENT ON COLUMN public.faturas.vlmulta IS 'Valor da Multa por atraso de pagamento da Fatura.';
 COMMENT ON COLUMN public.faturas.dtcadfatura IS 'Data de Geração do Registro';
 
--- Name: feitospor; Type: TABLE; Schema: public; Owner: postgres
+-- Name: feitospor; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.feitospor (
     pkfeitospor integer NOT NULL,
     fkoficina integer NOT NULL,
@@ -881,7 +881,7 @@ CREATE TABLE public.feitospor (
     nudiasprevistos smallint,
     dtcadfeitopor date
 );
-ALTER TABLE public.feitospor OWNER TO postgres;
+ALTER TABLE public.feitospor OWNER TO root;
 COMMENT ON TABLE public.feitospor IS 'Registros dos Serviços feitos pelas oficinas.';
 COMMENT ON COLUMN public.feitospor.pkfeitospor IS 'PK da tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.feitospor.fkoficina IS 'FK para tabela oficinas (que realiza um serviço).';
@@ -890,7 +890,7 @@ COMMENT ON COLUMN public.feitospor.txdescricaocomplementar IS 'Descrição compl
 COMMENT ON COLUMN public.feitospor.nudiasprevistos IS 'Prazo inicialmente previsto para o serviço.';
 COMMENT ON COLUMN public.feitospor.dtcadfeitopor IS 'Data de geração do registro.';
 
--- Name: fornecedores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fornecedores; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.fornecedores (
     pkfornecedor integer NOT NULL,
     txnome character varying(250) DEFAULT NULL::character varying,
@@ -906,7 +906,7 @@ CREATE TABLE public.fornecedores (
     dtfundacao date,
     dtcadfornecedor date NOT NULL
 );
-ALTER TABLE public.fornecedores OWNER TO postgres;
+ALTER TABLE public.fornecedores OWNER TO root;
 COMMENT ON TABLE public.fornecedores IS 'Cadastro dos Fornecedores de uma empresa.';
 COMMENT ON COLUMN public.fornecedores.pkfornecedor IS 'PK da tabela.';
 COMMENT ON COLUMN public.fornecedores.txnome IS 'Nome usual completo (sem abreviações)';
@@ -921,7 +921,7 @@ COMMENT ON COLUMN public.fornecedores.aoportefornecedor IS 'P|M|G – Porte do f
 COMMENT ON COLUMN public.fornecedores.dtfundacao IS 'Data de fundação do fornecedor.';
 COMMENT ON COLUMN public.fornecedores.dtcadfornecedor IS 'Data de geração do registro.';
 
--- Name: fornecedorestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fornecedorestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.fornecedorestels (
     pkfornecedortel integer NOT NULL,
     fkfornecedor integer NOT NULL,
@@ -930,7 +930,7 @@ CREATE TABLE public.fornecedorestels (
     txnomecontato character varying(30),
     dtcadfornecedortel date
 );
-ALTER TABLE public.fornecedorestels OWNER TO postgres;
+ALTER TABLE public.fornecedorestels OWNER TO root;
 COMMENT ON TABLE public.fornecedorestels IS 'Registro dos Telefones dos fornecedores.';
 COMMENT ON COLUMN public.fornecedorestels.pkfornecedortel IS 'PK da tabela.';
 COMMENT ON COLUMN public.fornecedorestels.fkfornecedor IS 'FK apontando para a tabela fornecedores.';
@@ -939,21 +939,21 @@ COMMENT ON COLUMN public.fornecedorestels.nutelefone IS 'Número do telefone (so
 COMMENT ON COLUMN public.fornecedorestels.txnomecontato IS 'Nomes das pessoas que atendem como contato no telefone.';
 COMMENT ON COLUMN public.fornecedorestels.dtcadfornecedortel IS 'Data de geração do registro.';
 
--- Name: fornecimentos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: fornecimentos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.fornecimentos (
     pkfornecimento integer NOT NULL,
     fkproduto character(12) DEFAULT (0)::numeric NOT NULL,
     fkfornecedor integer NOT NULL,
     dtcadfornecimento date NOT NULL
 );
-ALTER TABLE public.fornecimentos OWNER TO postgres;
+ALTER TABLE public.fornecimentos OWNER TO root;
 COMMENT ON TABLE public.fornecimentos IS 'Registro com os produtos fornecidos por cada fornecedor.';
 COMMENT ON COLUMN public.fornecimentos.pkfornecimento IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.fornecimentos.fkproduto IS 'FK para a tabela produtos. Forma com fkfornecedor uma UK.';
 COMMENT ON COLUMN public.fornecimentos.fkfornecedor IS 'FK para a tabela fornecedores. Forma com fkproduto uma UK.';
 COMMENT ON COLUMN public.fornecimentos.dtcadfornecimento IS 'Data de geração do registro.';
 
--- Name: funcionarios; Type: TABLE; Schema: public; Owner: postgres
+-- Name: funcionarios; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.funcionarios (
     pkfuncionario integer NOT NULL,
     txprenomes character varying(40) NOT NULL,
@@ -974,7 +974,7 @@ CREATE TABLE public.funcionarios (
     nucep character(8) NOT NULL,
     dtcadfuncionario date NOT NULL
 );
-ALTER TABLE public.funcionarios OWNER TO postgres;
+ALTER TABLE public.funcionarios OWNER TO root;
 COMMENT ON TABLE public.funcionarios IS 'Cadastro dos Funcionários';
 COMMENT ON COLUMN public.funcionarios.pkfuncionario IS 'Pk da Tabela.';
 COMMENT ON COLUMN public.funcionarios.txprenomes IS 'Nomes do funcionário sem abreviações e sem o sobrenome.';
@@ -995,7 +995,7 @@ COMMENT ON COLUMN public.funcionarios.vlcomissao IS 'Valor da comissão (se não
 COMMENT ON COLUMN public.funcionarios.nucep IS 'Número do CEP (somente números).';
 COMMENT ON COLUMN public.funcionarios.dtcadfuncionario IS 'Data de geração do registro.';
 
--- Name: funcionariosplanos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: funcionariosplanos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.funcionariosplanos (
     pkfuncionarioplano integer NOT NULL,
     fkfuncionario integer NOT NULL,
@@ -1004,7 +1004,7 @@ CREATE TABLE public.funcionariosplanos (
     dtdesligamento date NOT NULL,
     dtcadfuncplano date
 );
-ALTER TABLE public.funcionariosplanos OWNER TO postgres;
+ALTER TABLE public.funcionariosplanos OWNER TO root;
 COMMENT ON TABLE public.funcionariosplanos IS 'Registro dos planos de saúde dos funcionários.';
 COMMENT ON COLUMN public.funcionariosplanos.pkfuncionarioplano IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.funcionariosplanos.fkfuncionario IS 'FK apontando para a tabela funcionarios.';
@@ -1013,7 +1013,7 @@ COMMENT ON COLUMN public.funcionariosplanos.dtvinculacao IS 'Data de vinculaçã
 COMMENT ON COLUMN public.funcionariosplanos.dtdesligamento IS 'Data de desligamento do funcionário ao plano de saúde.';
 COMMENT ON COLUMN public.funcionariosplanos.dtcadfuncplano IS 'Data de geração do registro.';
 
--- Name: funcionariostels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: funcionariostels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.funcionariostels (
     pkfuncionariotel integer NOT NULL,
     fkfuncionario integer NOT NULL,
@@ -1022,7 +1022,7 @@ CREATE TABLE public.funcionariostels (
     txnomecontato character varying(30),
     dtcadfunctel date
 );
-ALTER TABLE public.funcionariostels OWNER TO postgres;
+ALTER TABLE public.funcionariostels OWNER TO root;
 COMMENT ON TABLE public.funcionariostels IS 'Registros dos telefones de cada funcionário.';
 COMMENT ON COLUMN public.funcionariostels.pkfuncionariotel IS 'PK da Tabela.';
 COMMENT ON COLUMN public.funcionariostels.fkfuncionario IS 'FK apontando para a tabela funcionarios.';
@@ -1031,7 +1031,7 @@ COMMENT ON COLUMN public.funcionariostels.nutelefone IS 'Número do telefone (so
 COMMENT ON COLUMN public.funcionariostels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.funcionariostels.dtcadfunctel IS 'Data de geração do registro.';
 
--- Name: funcoes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: funcoes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.funcoes (
     pkfuncao smallint NOT NULL,
     txnomefuncao character varying(60) NOT NULL,
@@ -1039,7 +1039,7 @@ CREATE TABLE public.funcoes (
     qtanosprefuncao smallint,
     dtcadfuncao date NOT NULL
 );
-ALTER TABLE public.funcoes OWNER TO postgres;
+ALTER TABLE public.funcoes OWNER TO root;
 COMMENT ON TABLE public.funcoes IS 'Cadastro das funções que podem ser exercidas por funcionários.';
 COMMENT ON COLUMN public.funcoes.pkfuncao IS 'Pk da Tabela';
 COMMENT ON COLUMN public.funcoes.txnomefuncao IS 'Nome completo e sem abreviações.';
@@ -1047,21 +1047,21 @@ COMMENT ON COLUMN public.funcoes.txdescricaofuncao IS 'Descrição completa das 
 COMMENT ON COLUMN public.funcoes.qtanosprefuncao IS 'Quantidade de anos na empresa para assumir a função.';
 COMMENT ON COLUMN public.funcoes.dtcadfuncao IS 'Data de Geração do Registro.';
 
--- Name: grausdeescolaridade; Type: TABLE; Schema: public; Owner: postgres
+-- Name: grausdeescolaridade; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.grausdeescolaridade (
     pkgrauescolaridade smallint NOT NULL,
     txnomecomum character varying(30) NOT NULL,
     qtanosdeestudo smallint NOT NULL,
     dtcadgrauescolaridade date NOT NULL
 );
-ALTER TABLE public.grausdeescolaridade OWNER TO postgres;
+ALTER TABLE public.grausdeescolaridade OWNER TO root;
 COMMENT ON TABLE public.grausdeescolaridade IS 'Cadastro dos Níveis de Escolaridade (Educação).';
 COMMENT ON COLUMN public.grausdeescolaridade.pkgrauescolaridade IS 'PK da Tabela';
 COMMENT ON COLUMN public.grausdeescolaridade.txnomecomum IS 'Nome do nível de educação (sem abreviações).';
 COMMENT ON COLUMN public.grausdeescolaridade.qtanosdeestudo IS 'Quantidade de anos de estudo para alcançar o grau de escolaridade.';
 COMMENT ON COLUMN public.grausdeescolaridade.dtcadgrauescolaridade IS 'Data de Geração do Registro';
 
--- Name: habilitacoes; Type: TABLE; Schema: public; Owner: postgres
+-- Name: habilitacoes; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.habilitacoes (
     pkhabilitacao smallint NOT NULL,
     fkcurso smallint NOT NULL,
@@ -1070,7 +1070,7 @@ CREATE TABLE public.habilitacoes (
     dtcapacitacao date NOT NULL,
     dtcadhabilitacao date NOT NULL
 );
-ALTER TABLE public.habilitacoes OWNER TO postgres;
+ALTER TABLE public.habilitacoes OWNER TO root;
 COMMENT ON TABLE public.habilitacoes IS 'Registro dos Cursos que cada professor tem habilitação para atuar.';
 COMMENT ON COLUMN public.habilitacoes.pkhabilitacao IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.habilitacoes.fkcurso IS 'Parte da PK e FK indicando o código do curso.';
@@ -1079,7 +1079,7 @@ COMMENT ON COLUMN public.habilitacoes.dthabilitacao IS 'Parte da PK é a Data de
 COMMENT ON COLUMN public.habilitacoes.dtcapacitacao IS 'Data quando o professor conseguiu a capacitação para ministrar a disciplina.';
 COMMENT ON COLUMN public.habilitacoes.dtcadhabilitacao IS 'Data de geração do registro';
 
--- Name: historicoprofissional; Type: TABLE; Schema: public; Owner: postgres
+-- Name: historicoprofissional; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.historicoprofissional (
     pkhistorico smallint NOT NULL,
     fkfuncionario integer NOT NULL,
@@ -1089,7 +1089,7 @@ CREATE TABLE public.historicoprofissional (
     dttermino date NOT NULL,
     dtcadhistprof date NOT NULL
 );
-ALTER TABLE public.historicoprofissional OWNER TO postgres;
+ALTER TABLE public.historicoprofissional OWNER TO root;
 COMMENT ON TABLE public.historicoprofissional IS 'Registro do histórico profissional de um funcionário.';
 COMMENT ON COLUMN public.historicoprofissional.pkhistorico IS 'PK da Tabela';
 COMMENT ON COLUMN public.historicoprofissional.fkfuncionario IS 'FK para tabela funcionários.';
@@ -1099,7 +1099,7 @@ COMMENT ON COLUMN public.historicoprofissional.dtinicio IS 'Data de inicio de at
 COMMENT ON COLUMN public.historicoprofissional.dttermino IS 'Data de termino de atividade do funcionário na empresa (na atividade)';
 COMMENT ON COLUMN public.historicoprofissional.dtcadhistprof IS 'Data de Geração do Registro';
 
--- Name: instituicoesdeensino; Type: TABLE; Schema: public; Owner: postgres
+-- Name: instituicoesdeensino; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.instituicoesdeensino (
     pkinstituicao smallint NOT NULL,
     txnomeinstituicao character varying(200) NOT NULL,
@@ -1110,7 +1110,7 @@ CREATE TABLE public.instituicoesdeensino (
     nucep character(8) DEFAULT NULL::bpchar,
     dtcadinstituicao date NOT NULL
 );
-ALTER TABLE public.instituicoesdeensino OWNER TO postgres;
+ALTER TABLE public.instituicoesdeensino OWNER TO root;
 COMMENT ON TABLE public.instituicoesdeensino IS 'Cadastro de Instituições de Ensino.';
 COMMENT ON COLUMN public.instituicoesdeensino.pkinstituicao IS 'Pk da Tabela.';
 COMMENT ON COLUMN public.instituicoesdeensino.txnomeinstituicao IS 'Nome usual completo (sem abreviações)';
@@ -1121,7 +1121,7 @@ COMMENT ON COLUMN public.instituicoesdeensino.dtfundacao IS 'Data de fundação 
 COMMENT ON COLUMN public.instituicoesdeensino.nucep IS 'Número do CEP (somente números).';
 COMMENT ON COLUMN public.instituicoesdeensino.dtcadinstituicao IS 'Data de geração do registro.';
 
--- Name: instituicoestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: instituicoestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.instituicoestels (
     pkinstituicaotel smallint NOT NULL,
     fkinstituicao smallint NOT NULL,
@@ -1130,7 +1130,7 @@ CREATE TABLE public.instituicoestels (
     txnomecontato character varying(30),
     dtcadinstenstel date
 );
-ALTER TABLE public.instituicoestels OWNER TO postgres;
+ALTER TABLE public.instituicoestels OWNER TO root;
 COMMENT ON TABLE public.instituicoestels IS 'Registros dos telefones das Instituições de Ensino.';
 COMMENT ON COLUMN public.instituicoestels.pkinstituicaotel IS 'PK da Tabela';
 COMMENT ON COLUMN public.instituicoestels.fkinstituicao IS 'FK para a tabela instituições de ensino.';
@@ -1139,7 +1139,7 @@ COMMENT ON COLUMN public.instituicoestels.nutelefone IS 'Número do telefone (so
 COMMENT ON COLUMN public.instituicoestels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.instituicoestels.dtcadinstenstel IS 'Data de geração do registro.';
 
--- Name: inventarios; Type: TABLE; Schema: public; Owner: postgres
+-- Name: inventarios; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.inventarios (
     pkinventario smallint NOT NULL,
     fkproduto character(12) DEFAULT (0)::numeric NOT NULL,
@@ -1149,7 +1149,7 @@ CREATE TABLE public.inventarios (
     txlocal character varying(250) DEFAULT NULL::character varying,
     dtcadinventario date NOT NULL
 );
-ALTER TABLE public.inventarios OWNER TO postgres;
+ALTER TABLE public.inventarios OWNER TO root;
 COMMENT ON TABLE public.inventarios IS 'Cadastro com o levantamento de itens de estoque feitos pelos funcionários.';
 COMMENT ON COLUMN public.inventarios.pkinventario IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.inventarios.fkproduto IS 'Parte da PK e FK apontando para a tabela Produtos.';
@@ -1159,7 +1159,7 @@ COMMENT ON COLUMN public.inventarios.qtestoque IS 'Quantidade contabilizada do i
 COMMENT ON COLUMN public.inventarios.txlocal IS 'Local de realização do Inventário';
 COMMENT ON COLUMN public.inventarios.dtcadinventario IS 'Data de geração do registro.';
 
--- Name: livros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: livros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.livros (
     pklivro integer NOT NULL,
     txtituloacervo character varying(90) NOT NULL,
@@ -1172,7 +1172,7 @@ CREATE TABLE public.livros (
     qtexemplaresconsulta numeric(2,0) DEFAULT NULL::numeric,
     dtcadlivro date NOT NULL
 );
-ALTER TABLE public.livros OWNER TO postgres;
+ALTER TABLE public.livros OWNER TO root;
 COMMENT ON TABLE public.livros IS 'Cadastro dos Livros que podem ser usados em bibliografias de disciplinas.';
 COMMENT ON COLUMN public.livros.pklivro IS 'Pk da Tabela';
 COMMENT ON COLUMN public.livros.txtituloacervo IS 'Texto com o título do acervo';
@@ -1185,7 +1185,7 @@ COMMENT ON COLUMN public.livros.qtexemplaresacervo IS 'Quantidade total do livro
 COMMENT ON COLUMN public.livros.qtexemplaresconsulta IS 'Quantidade mínima (em consulta) para o livro no acervo';
 COMMENT ON COLUMN public.livros.dtcadlivro IS 'Data de Geração do Registro';
 
--- Name: logradouros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: logradouros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.logradouros (
     pklogradouro integer NOT NULL,
     txnomelogradouro character varying(120) NOT NULL,
@@ -1194,7 +1194,7 @@ CREATE TABLE public.logradouros (
     aotipodepiso character(1),
     dtcadlogradouro date NOT NULL
 );
-ALTER TABLE public.logradouros OWNER TO postgres;
+ALTER TABLE public.logradouros OWNER TO root;
 COMMENT ON TABLE public.logradouros IS 'Cadastro dos logradouros.';
 COMMENT ON COLUMN public.logradouros.pklogradouro IS 'PK da Tabela';
 COMMENT ON COLUMN public.logradouros.txnomelogradouro IS 'Texto com o nome do logradouro com o tipo (praça, rua, etc.) indicado.';
@@ -1202,20 +1202,20 @@ COMMENT ON COLUMN public.logradouros.fkcidade IS 'FK para a tabela de Cidades.';
 COMMENT ON COLUMN public.logradouros.fklogradourotipo IS 'FK para a tabela de Bairros.';
 COMMENT ON COLUMN public.logradouros.dtcadlogradouro IS 'Data de geração do registro';
 
--- Name: logradourostipos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: logradourostipos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.logradourostipos (
     pklogradourotipo smallint NOT NULL,
     txnometipologradouro character varying(250) NOT NULL,
     dtcadtipologradouro date NOT NULL
 );
-ALTER TABLE public.logradourostipos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: logradourostipos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.logradourostipos OWNER TO root;
+-- COMENTÁRIO DE TABELA: logradourostipos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.logradourostipos IS 'Cadastro dos tipo de logradouros';
 COMMENT ON COLUMN public.logradourostipos.pklogradourotipo IS 'PK da Tabela';
 COMMENT ON COLUMN public.logradourostipos.txnometipologradouro IS 'Texto com o nome do TIPO logradouro com o tipo (praça, rua, etc.).';
 COMMENT ON COLUMN public.logradourostipos.dtcadtipologradouro IS 'Data de geração do registro';
 
--- Name: logrcompleto; Type: VIEW; Schema: public; Owner: postgres
+-- Name: logrcompleto; Type: VIEW; Schema: public; Owner: root
 CREATE VIEW public.logrcompleto AS
  SELECT logradouros.pklogradouro,
     concat(logradourostipos.txnometipologradouro, ' ', logradouros.txnomelogradouro) AS txlogrcompleto,
@@ -1225,12 +1225,12 @@ CREATE VIEW public.logrcompleto AS
    FROM (public.logradouros
      JOIN public.logradourostipos ON ((logradouros.fklogradourotipo = logradourostipos.pklogradourotipo)))
   ORDER BY logradouros.pklogradouro;
-ALTER TABLE public.logrcompleto OWNER TO postgres;
+ALTER TABLE public.logrcompleto OWNER TO root;
 
--- Name: VIEW logrcompleto; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: VIEW logrcompleto; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON VIEW public.logrcompleto IS 'Concatenação de dados das tabelas logradouros e logradourostipos';
 
--- Name: matriculas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: matriculas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.matriculas (
     pkmatricula integer NOT NULL,
     fkturma integer NOT NULL,
@@ -1239,7 +1239,7 @@ CREATE TABLE public.matriculas (
     dtvalidade date NOT NULL,
     dtcadmatricula date NOT NULL
 );
-ALTER TABLE public.matriculas OWNER TO postgres;
+ALTER TABLE public.matriculas OWNER TO root;
 COMMENT ON TABLE public.matriculas IS 'Cadastro das matrículas dos funcionários em disciplinas que foram atribuídas aos professores. Tem uma chave primária simples, sequencial.';
 COMMENT ON COLUMN public.matriculas.pkmatricula IS 'PK da Tabela.';
 COMMENT ON COLUMN public.matriculas.fkturma IS 'FK para a tabela turmas (que relaciona professores com disciplinas em um determinado SEMESTRE).';
@@ -1248,7 +1248,7 @@ COMMENT ON COLUMN public.matriculas.dtmatricula IS 'Data de Matrícula';
 COMMENT ON COLUMN public.matriculas.dtvalidade IS 'Data de Validade da Matrícula (duração do vinculo funcionário-disciplina).';
 COMMENT ON COLUMN public.matriculas.dtcadmatricula IS 'Data de geração do registro.';
 
--- Name: medicos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: medicos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.medicos (
     pkmedico integer NOT NULL,
     txnomemedico character varying(200) NOT NULL,
@@ -1266,7 +1266,7 @@ CREATE TABLE public.medicos (
 );
 -- lista de campos para comando insert: 
 -- (pkmedico,txnomemedico,nucrm,fkespecialidade,fkinstituicao,fklogradouromoradia,txcomplementomoradia,fklogradouroclinica,txcomplementoclinica,aosituacao,dtcadmedico,nucepmoradia,nucepclinica)
-ALTER TABLE public.medicos OWNER TO postgres;
+ALTER TABLE public.medicos OWNER TO root;
 COMMENT ON TABLE public.medicos IS 'Cadastro de médicos.';
 COMMENT ON COLUMN public.medicos.pkmedico IS 'PK da Tabela';
 COMMENT ON COLUMN public.medicos.txnomemedico IS 'Nome completo e sem abreviação';
@@ -1282,7 +1282,7 @@ COMMENT ON COLUMN public.medicos.dtcadmedico IS 'Data de geração do registro';
 COMMENT ON COLUMN public.medicos.nucepmoradia IS 'Número do CEP do Logradouro da Moradia do médico (somente números)';
 COMMENT ON COLUMN public.medicos.nucepclinica IS 'Número do CEP do logradouro da clínica onde trabalhar o médico. Somente números.';
 
--- Name: movimentos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: movimentos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.movimentos (
     pkmovimento integer NOT NULL,
     fklivro integer DEFAULT NULL::numeric,
@@ -1293,7 +1293,7 @@ CREATE TABLE public.movimentos (
     dtrealdevolucao date,
     dtcadmovimento date NOT NULL
 );
-ALTER TABLE public.movimentos OWNER TO postgres;
+ALTER TABLE public.movimentos OWNER TO root;
 COMMENT ON TABLE public.movimentos IS 'Registro de movimentos de livros realizados pelos funcionários.';
 COMMENT ON COLUMN public.movimentos.pkmovimento IS 'PK da Tabela.';
 COMMENT ON COLUMN public.movimentos.fklivro IS 'FK para a tabela livros (registrado no movimento).';
@@ -1304,21 +1304,21 @@ COMMENT ON COLUMN public.movimentos.dtprevistadevolucao IS 'Data prevista de dev
 COMMENT ON COLUMN public.movimentos.dtrealdevolucao IS 'Data real da devolução';
 COMMENT ON COLUMN public.movimentos.dtcadmovimento IS 'Data de Geração do Registro.';
 
--- Name: movimentostipos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: movimentostipos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.movimentostipos (
     pktipomovimento smallint NOT NULL,
     txnometipomov character varying(80) NOT NULL,
     aopermiteretirada character(1) NOT NULL,
     dtcadmovimtipo date NOT NULL
 );
-ALTER TABLE public.movimentostipos OWNER TO postgres;
+ALTER TABLE public.movimentostipos OWNER TO root;
 COMMENT ON TABLE public.movimentostipos IS 'Cadastro dos tipos de movimentos.';
 COMMENT ON COLUMN public.movimentostipos.pktipomovimento IS 'PK da Tabela.';
 COMMENT ON COLUMN public.movimentostipos.txnometipomov IS 'Nome do tipo de movimento (sem abreviações).';
 COMMENT ON COLUMN public.movimentostipos.aopermiteretirada IS 'S|N para “permite” ou “não permite” retirada do exemplo do espaço da biblioteca. biblioteca.';
 COMMENT ON COLUMN public.movimentostipos.dtcadmovimtipo IS 'Data de Geração do Registro';
 
--- Name: nfcompras; Type: TABLE; Schema: public; Owner: postgres
+-- Name: nfcompras; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.nfcompras (
     pknunfcompra integer NOT NULL,
     fkfornecedor integer,
@@ -1329,7 +1329,7 @@ CREATE TABLE public.nfcompras (
     txcomentarios character varying(1000) DEFAULT NULL::character varying,
     dtcadnfcompra date NOT NULL
 );
-ALTER TABLE public.nfcompras OWNER TO postgres;
+ALTER TABLE public.nfcompras OWNER TO root;
 COMMENT ON TABLE public.nfcompras IS 'Cadastro das Notas Fiscais de Compras. É a entidade forte entre nf_compras e nf_compras_itens.';
 COMMENT ON COLUMN public.nfcompras.pknunfcompra IS 'PK da Tabela.';
 COMMENT ON COLUMN public.nfcompras.fkfornecedor IS 'FK com o código do fornecedor da Nota de Compra';
@@ -1340,21 +1340,21 @@ COMMENT ON COLUMN public.nfcompras.aosituacao IS 'Indicador da situação da Not
 COMMENT ON COLUMN public.nfcompras.txcomentarios IS 'Comentário geral sobre a Nota de Compra';
 COMMENT ON COLUMN public.nfcompras.dtcadnfcompra IS 'Data de Geração do Registro';
 
--- Name: nfcomprasitens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: nfcomprasitens; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.nfcomprasitens (
     fknunfcompra integer NOT NULL,
     fkproduto character(12) DEFAULT (0)::numeric NOT NULL,
     qtcomprada numeric(5,0) NOT NULL,
     vlunitario double precision NOT NULL
 );
-ALTER TABLE public.nfcomprasitens OWNER TO postgres;
+ALTER TABLE public.nfcomprasitens OWNER TO root;
 COMMENT ON TABLE public.nfcomprasitens IS 'Cadastro das Notas Fiscais de Compras. É a entidade fraca entre nf_compras e nf_compras_itens.';
 COMMENT ON COLUMN public.nfcomprasitens.fknunfcompra IS 'Parte da PK e FK com o código da nota fiscal de venda';
 COMMENT ON COLUMN public.nfcomprasitens.fkproduto IS 'Parte da PK e FK apontando para a tabela Produtos.';
 COMMENT ON COLUMN public.nfcomprasitens.qtcomprada IS 'Quantidade de produto vendida';
 COMMENT ON COLUMN public.nfcomprasitens.vlunitario IS 'Valor unitário do produto na Nota de venda (pode ser ? do valor do estoque)';
 
--- Name: nfvendas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: nfvendas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.nfvendas (
     pknunfvenda integer NOT NULL,
     fkcliente integer DEFAULT NULL::numeric,
@@ -1365,7 +1365,7 @@ CREATE TABLE public.nfvendas (
     dtemissao date NOT NULL,
     dtcadnfvenda date NOT NULL
 );
-ALTER TABLE public.nfvendas OWNER TO postgres;
+ALTER TABLE public.nfvendas OWNER TO root;
 COMMENT ON TABLE public.nfvendas IS 'Cadastro das Notas Fiscais de Vendas. É a entidade forte entre nf_vendas e nf_vendas_itens.';
 COMMENT ON COLUMN public.nfvendas.pknunfvenda IS 'PK da Tabela.';
 COMMENT ON COLUMN public.nfvendas.fkcliente IS 'FK para a tabela clientes (para o qual se faz a venda).';
@@ -1376,21 +1376,21 @@ COMMENT ON COLUMN public.nfvendas.dtvenda IS 'Data de realização da venda que 
 COMMENT ON COLUMN public.nfvendas.dtemissao IS 'Data de emissão da nota de venda.';
 COMMENT ON COLUMN public.nfvendas.dtcadnfvenda IS 'Data de Geração do Registfro.';
 
--- Name: nfvendasitens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: nfvendasitens; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.nfvendasitens (
     fknunfvenda integer NOT NULL,
     fkproduto character(12) DEFAULT (0)::numeric NOT NULL,
     qtvendida integer NOT NULL,
     vlunitario double precision NOT NULL
 );
-ALTER TABLE public.nfvendasitens OWNER TO postgres;
+ALTER TABLE public.nfvendasitens OWNER TO root;
 COMMENT ON TABLE public.nfvendasitens IS 'Cadastro das Notas Fiscais de Vendas. É a entidade fraca entre nf_vendas e nf_vendas_itens.';
 COMMENT ON COLUMN public.nfvendasitens.fknunfvenda IS 'Parte da PK e FK com o código da nota fiscal de venda';
 COMMENT ON COLUMN public.nfvendasitens.fkproduto IS 'Parte da PK e FK apontando para a tabela Produtos.';
 COMMENT ON COLUMN public.nfvendasitens.qtvendida IS 'Quantidade de produto vendida';
 COMMENT ON COLUMN public.nfvendasitens.vlunitario IS 'Valor unitário do produto na Nota de venda (pode ser ? do valor do estoque)';
 
--- Name: ocorrencias; Type: TABLE; Schema: public; Owner: postgres
+-- Name: ocorrencias; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.ocorrencias (
     pkocorrencia integer NOT NULL,
     fksinistro integer NOT NULL,
@@ -1401,7 +1401,7 @@ CREATE TABLE public.ocorrencias (
     txlogradouroocorrencia character varying(250) NOT NULL,
     dtcadocorrencia date NOT NULL
 );
-ALTER TABLE public.ocorrencias OWNER TO postgres;
+ALTER TABLE public.ocorrencias OWNER TO root;
 COMMENT ON TABLE public.ocorrencias IS 'Registros da ocorrência de Sinistros nos veículos segurados de uma seguradora.';
 COMMENT ON COLUMN public.ocorrencias.pkocorrencia IS 'PK da Tabela.';
 COMMENT ON COLUMN public.ocorrencias.fksinistro IS 'FK indicando o código do sinistro';
@@ -1412,7 +1412,7 @@ COMMENT ON COLUMN public.ocorrencias.fklogradourosecundario IS 'FK com o código
 COMMENT ON COLUMN public.ocorrencias.txlogradouroocorrencia IS 'Texto descrevendo os logradouros e localidade da ocorrência do sinistro.';
 COMMENT ON COLUMN public.ocorrencias.dtcadocorrencia IS 'Data de geração do registro';
 
--- Name: oficinas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: oficinas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.oficinas (
     pkoficina integer NOT NULL,
     txrazaosocial character varying(100) NOT NULL,
@@ -1422,7 +1422,7 @@ CREATE TABLE public.oficinas (
     dtfundacao date,
     dtcadoficina date
 );
-ALTER TABLE public.oficinas OWNER TO postgres;
+ALTER TABLE public.oficinas OWNER TO root;
 COMMENT ON TABLE public.oficinas IS 'Cadastro das Oficinas que prestam serviços para reparos em veículos.';
 COMMENT ON COLUMN public.oficinas.pkoficina IS 'PK da Tabela';
 COMMENT ON COLUMN public.oficinas.txrazaosocial IS 'Razão Social completa da Oficina segundo o cadastro do CNPJ';
@@ -1432,7 +1432,7 @@ COMMENT ON COLUMN public.oficinas.fklogradouro IS 'FK com o código do Logradour
 COMMENT ON COLUMN public.oficinas.dtfundacao IS 'Data de fundação ou criação da oficina.';
 COMMENT ON COLUMN public.oficinas.dtcadoficina IS 'Data de geração do registro';
 
--- Name: oficinastels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: oficinastels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.oficinastels (
     pkoficinatel integer NOT NULL,
     fkoficina integer NOT NULL,
@@ -1441,7 +1441,7 @@ CREATE TABLE public.oficinastels (
     txnomecontato character varying(30),
     dtcadoficinatel date
 );
-ALTER TABLE public.oficinastels OWNER TO postgres;
+ALTER TABLE public.oficinastels OWNER TO root;
 COMMENT ON TABLE public.oficinastels IS 'Registro dos Telefones das oficinas.';
 COMMENT ON COLUMN public.oficinastels.pkoficinatel IS 'PK da tabela.';
 COMMENT ON COLUMN public.oficinastels.fkoficina IS 'FK apontando para a tabela oficinas.';
@@ -1450,7 +1450,7 @@ COMMENT ON COLUMN public.oficinastels.nutelefone IS 'Número do telefone (soment
 COMMENT ON COLUMN public.oficinastels.txnomecontato IS 'Nomes das pessoas que atendem como contato no telefone.';
 COMMENT ON COLUMN public.oficinastels.dtcadoficinatel IS 'Data de geração do registro.';
 
--- Name: onibus; Type: VIEW; Schema: public; Owner: postgres
+-- Name: onibus; Type: VIEW; Schema: public; Owner: root
 CREATE VIEW public.onibus WITH (security_barrier='false') AS
  SELECT veiculos.pkveiculo AS pkonibus,
     veiculos.ukplaca,
@@ -1461,9 +1461,9 @@ CREATE VIEW public.onibus WITH (security_barrier='false') AS
     veiculos.dtcadveiculo AS dtcadonibus
    FROM public.veiculos
   WHERE (veiculos.aocategoria = 'O'::bpchar);
-ALTER TABLE public.onibus OWNER TO postgres;
+ALTER TABLE public.onibus OWNER TO root;
 
--- Name: paises; Type: TABLE; Schema: public; Owner: postgres
+-- Name: paises; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.paises (
     pkpais character(3) NOT NULL,
     txnomepais character varying(200) NOT NULL,
@@ -1471,7 +1471,7 @@ CREATE TABLE public.paises (
     vlarea double precision,
     dtcadpais date
 );
-ALTER TABLE public.paises OWNER TO postgres;
+ALTER TABLE public.paises OWNER TO root;
 COMMENT ON TABLE public.paises IS 'Paises existentes no mundo (ONU).';
 COMMENT ON COLUMN public.paises.pkpais IS 'PK da tabela.';
 COMMENT ON COLUMN public.paises.txnomepais IS 'Nome completo do país (registrado na ONU).';
@@ -1479,33 +1479,33 @@ COMMENT ON COLUMN public.paises.txnomecapital IS 'Nome da cidade capital do paí
 COMMENT ON COLUMN public.paises.vlarea IS 'Área do país em Kilometro quadrado.';
 COMMENT ON COLUMN public.paises.dtcadpais IS 'Data de geração do registro.';
 
--- Name: palavraschaves; Type: TABLE; Schema: public; Owner: postgres
+-- Name: palavraschaves; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.palavraschaves (
     pkpalavra integer NOT NULL,
     txnomepalavra character varying(30) NOT NULL,
     dtcadpalavrachave date NOT NULL
 );
-ALTER TABLE public.palavraschaves OWNER TO postgres;
--- COMENTÁRIO DE TABELA: palavraschaves; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.palavraschaves OWNER TO root;
+-- COMENTÁRIO DE TABELA: palavraschaves; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.palavraschaves IS 'Cadastro das palavras-chaves para pesquisa por palavras de exemplares de um acervo de uma biblioteca.';
 COMMENT ON COLUMN public.palavraschaves.pkpalavra IS 'PK da Tabela.';
 COMMENT ON COLUMN public.palavraschaves.txnomepalavra IS 'Palavra-chave de pesquisa complete e se abreviações';
 COMMENT ON COLUMN public.palavraschaves.dtcadpalavrachave IS 'Data de Geração do Registro';
 
--- Name: palavraslivros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: palavraslivros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.palavraslivros (
     fkpalavra integer NOT NULL,
     fklivro integer NOT NULL,
     dtcadpalchavelivro date NOT NULL
 );
-ALTER TABLE public.palavraslivros OWNER TO postgres;
--- COMENTÁRIO DE TABELA: palavraslivros; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.palavraslivros OWNER TO root;
+-- COMENTÁRIO DE TABELA: palavraslivros; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.palavraslivros IS 'Registro das palavras-chaves de cada exemplar de um acervo.';
 COMMENT ON COLUMN public.palavraslivros.fkpalavra IS 'Parte da PK e FK com o código da Palavra-Chave de Pesquisa';
 COMMENT ON COLUMN public.palavraslivros.fklivro IS 'Parte da PK e FK com o código do livro';
 COMMENT ON COLUMN public.palavraslivros.dtcadpalchavelivro IS 'Data de geração do registro';
 
--- Name: passagens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: passagens; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.passagens (
     pkpassagem integer NOT NULL,
     fkviagem integer NOT NULL,
@@ -1514,8 +1514,8 @@ CREATE TABLE public.passagens (
     fkfuncionario integer DEFAULT NULL::numeric,
     dtcadpassagem date
 );
-ALTER TABLE public.passagens OWNER TO postgres;
--- COMENTÁRIO DE TABELA: passagens; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.passagens OWNER TO root;
+-- COMENTÁRIO DE TABELA: passagens; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.passagens IS 'Cadastro das passagens vendidas para funcionários em cada ônibus para cada viagem.';
 COMMENT ON COLUMN public.passagens.pkpassagem IS 'PK da tabela.';
 COMMENT ON COLUMN public.passagens.fkviagem IS 'FK com o código da viagem para o qual se vende a passagem';
@@ -1524,7 +1524,7 @@ COMMENT ON COLUMN public.passagens.nupoltrona IS 'Indica o número da poltrona d
 COMMENT ON COLUMN public.passagens.fkfuncionario IS 'FK com o código do funcionário que compra a passagem.';
 COMMENT ON COLUMN public.passagens.dtcadpassagem IS 'Data de geração do registro';
 
--- Name: planosdesaude; Type: TABLE; Schema: public; Owner: postgres
+-- Name: planosdesaude; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.planosdesaude (
     pkplanodesaude integer NOT NULL,
     txnomeplano character varying(200) NOT NULL,
@@ -1535,8 +1535,8 @@ CREATE TABLE public.planosdesaude (
     nucep character(8) DEFAULT NULL::bpchar,
     dtcadplanosaude date NOT NULL
 );
-ALTER TABLE public.planosdesaude OWNER TO postgres;
--- COMENTÁRIO DE TABELA: planosdesaude; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.planosdesaude OWNER TO root;
+-- COMENTÁRIO DE TABELA: planosdesaude; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.planosdesaude IS 'Cadastro dos planos de saúde.';
 COMMENT ON COLUMN public.planosdesaude.pkplanodesaude IS 'PK da Tabela';
 COMMENT ON COLUMN public.planosdesaude.txnomeplano IS 'Nome completo e usual para o plano de saúde';
@@ -1546,7 +1546,7 @@ COMMENT ON COLUMN public.planosdesaude.txcomplemento IS 'Texto com o complemento
 COMMENT ON COLUMN public.planosdesaude.nucep IS 'Número do CEP';
 COMMENT ON COLUMN public.planosdesaude.dtcadplanosaude IS 'Data de Geração do Registro';
 
--- Name: planostels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: planostels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.planostels (
     pkplanostel smallint NOT NULL,
     fkplanodesaude smallint NOT NULL,
@@ -1555,8 +1555,8 @@ CREATE TABLE public.planostels (
     txnomecontato character varying(30),
     dtcadplanotel date
 );
-ALTER TABLE public.planostels OWNER TO postgres;
--- COMENTÁRIO DE TABELA: planostels; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.planostels OWNER TO root;
+-- COMENTÁRIO DE TABELA: planostels; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.planostels IS 'Registro dos telefones de cada Plano de Saúde.';
 COMMENT ON COLUMN public.planostels.pkplanostel IS 'PK da Tabela';
 COMMENT ON COLUMN public.planostels.fkplanodesaude IS 'FK para a tabela planos de saúde';
@@ -1565,7 +1565,7 @@ COMMENT ON COLUMN public.planostels.nutelefone IS 'Número do telefone (somente 
 COMMENT ON COLUMN public.planostels.txnomecontato IS 'Nome de uma pessoa que atende como contato no telefone.';
 COMMENT ON COLUMN public.planostels.dtcadplanotel IS 'Data de geração do registro';
 
--- Name: produtos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: produtos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.produtos (
     pkproduto character(12) NOT NULL,
     txnome character varying(128) DEFAULT NULL::character varying,
@@ -1577,8 +1577,8 @@ CREATE TABLE public.produtos (
     txdescricaocompleta character varying(2000) DEFAULT NULL::character varying,
     dtcadproduto date NOT NULL
 );
-ALTER TABLE public.produtos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: produtos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.produtos OWNER TO root;
+-- COMENTÁRIO DE TABELA: produtos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.produtos IS 'Cadastro dos produtos que são feitos e vendidos pela empresa onde o funcionário trabalha.';
 COMMENT ON COLUMN public.produtos.pkproduto IS 'PK da Tabela';
 COMMENT ON COLUMN public.produtos.txnome IS 'Nome completo e usual';
@@ -1590,7 +1590,7 @@ COMMENT ON COLUMN public.produtos.qtdiaspromocao IS 'Quant. De dias para execuç
 COMMENT ON COLUMN public.produtos.txdescricaocompleta IS 'Texto com a descrição complete do produto.';
 COMMENT ON COLUMN public.produtos.dtcadproduto IS 'Data de geração do registro';
 
--- Name: professores; Type: TABLE; Schema: public; Owner: postgres
+-- Name: professores; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.professores (
     pkprofessor smallint NOT NULL,
     txnomeprofessor character varying(250) NOT NULL,
@@ -1600,8 +1600,8 @@ CREATE TABLE public.professores (
     dtnascimento date,
     dtcadprofessor date
 );
-ALTER TABLE public.professores OWNER TO postgres;
--- COMENTÁRIO DE TABELA: professores; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.professores OWNER TO root;
+-- COMENTÁRIO DE TABELA: professores; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.professores IS 'Professores de uma Instituição de ensino';
 COMMENT ON COLUMN public.professores.pkprofessor IS 'PK da tabela.';
 COMMENT ON COLUMN public.professores.txnomeprofessor IS 'Nome completo e sem abreviações';
@@ -1611,7 +1611,7 @@ COMMENT ON COLUMN public.professores.nucep IS 'Número do CEP (somente números)
 COMMENT ON COLUMN public.professores.dtnascimento IS 'Data de Nascimento';
 COMMENT ON COLUMN public.professores.dtcadprofessor IS 'Data de geração do registro';
 
--- Name: professorestels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: professorestels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.professorestels (
     pkprofessortel integer NOT NULL,
     fkprofessor smallint NOT NULL,
@@ -1619,8 +1619,8 @@ CREATE TABLE public.professorestels (
     nutelefone character(15) NOT NULL,
     dtcadprofessortel date
 );
-ALTER TABLE public.professorestels OWNER TO postgres;
--- COMENTÁRIO DE TABELA: professorestels; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.professorestels OWNER TO root;
+-- COMENTÁRIO DE TABELA: professorestels; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.professorestels IS 'Registro dos telefones de cada professor.';
 COMMENT ON COLUMN public.professorestels.pkprofessortel IS 'PK da tabela.';
 COMMENT ON COLUMN public.professorestels.fkprofessor IS 'FK para a tabela professores';
@@ -1628,7 +1628,7 @@ COMMENT ON COLUMN public.professorestels.fktipotelefone IS 'FK para a tabela tip
 COMMENT ON COLUMN public.professorestels.nutelefone IS 'Número do telefone (somente os números)';
 COMMENT ON COLUMN public.professorestels.dtcadprofessortel IS 'DAta de geração do registro';
 
--- Name: projetos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: projetos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.projetos (
     pkprojeto character(6) NOT NULL,
     txnomeprojeto character varying(90) DEFAULT ''::character varying NOT NULL,
@@ -1640,8 +1640,8 @@ CREATE TABLE public.projetos (
     fkprojetosuperior character(6) DEFAULT NULL::bpchar,
     dtcadprojeto date NOT NULL
 );
-ALTER TABLE public.projetos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: projetos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.projetos OWNER TO root;
+-- COMENTÁRIO DE TABELA: projetos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.projetos IS 'Cadastro dos projetos que são desenvolvidos pelos funcionários de uma empresa.';
 COMMENT ON COLUMN public.projetos.pkprojeto IS 'PK da tabela.';
 COMMENT ON COLUMN public.projetos.txnomeprojeto IS 'Nome completo e sem abreviações.';
@@ -1653,7 +1653,7 @@ COMMENT ON COLUMN public.projetos.dttermino IS 'Data de término do projeto (ap�
 COMMENT ON COLUMN public.projetos.fkprojetosuperior IS 'FK com o código de projeto superior (havendo subordinação).';
 COMMENT ON COLUMN public.projetos.dtcadprojeto IS 'Data de geração do registro.';
 
--- Name: rotasviarias; Type: TABLE; Schema: public; Owner: postgres
+-- Name: rotasviarias; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.rotasviarias (
     pkrota numeric(6,0) NOT NULL,
     txnomerota character varying(60) NOT NULL,
@@ -1662,8 +1662,8 @@ CREATE TABLE public.rotasviarias (
     fkcidadedestino smallint DEFAULT NULL::numeric,
     dtcadrotaviaria date NOT NULL
 );
-ALTER TABLE public.rotasviarias OWNER TO postgres;
--- COMENTÁRIO DE TABELA: rotasviarias; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.rotasviarias OWNER TO root;
+-- COMENTÁRIO DE TABELA: rotasviarias; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.rotasviarias IS 'Cadastro das rotas viárias de viagens entre cidades.';
 COMMENT ON COLUMN public.rotasviarias.pkrota IS 'PK da Tabela.';
 COMMENT ON COLUMN public.rotasviarias.txnomerota IS 'Nome completo e sem abreviações.';
@@ -1672,7 +1672,7 @@ COMMENT ON COLUMN public.rotasviarias.fkcidadeorigem IS 'FK com o código da cid
 COMMENT ON COLUMN public.rotasviarias.fkcidadedestino IS 'FK com o código da cidade de destino da rota viária';
 COMMENT ON COLUMN public.rotasviarias.dtcadrotaviaria IS 'Data de geração do registro';
 
--- Name: roteiros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: roteiros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.roteiros (
     pkroteiro integer NOT NULL,
     fkrota numeric(6,0) NOT NULL,
@@ -1680,8 +1680,8 @@ CREATE TABLE public.roteiros (
     nuordem character(3),
     dtcadroteiro date
 );
-ALTER TABLE public.roteiros OWNER TO postgres;
--- COMENTÁRIO DE TABELA: roteiros; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.roteiros OWNER TO root;
+-- COMENTÁRIO DE TABELA: roteiros; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.roteiros IS 'Cadastro dos roteiros de cada Rota Viária. É a lista de cidades por onde um ônibus passa em uma rota.';
 COMMENT ON COLUMN public.roteiros.pkroteiro IS 'PK da Tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.roteiros.fkrota IS 'FK apontando para a tabela rotas_viarias e parte da PK composta da Tabela.';
@@ -1689,7 +1689,7 @@ COMMENT ON COLUMN public.roteiros.fkcidade IS 'FK apontando para a tabela cidade
 COMMENT ON COLUMN public.roteiros.nuordem IS 'Número indicando a ordem das cidades dentro de uma rota viária.';
 COMMENT ON COLUMN public.roteiros.dtcadroteiro IS 'Data de geração do registro';
 
--- Name: seguradoras; Type: TABLE; Schema: public; Owner: postgres
+-- Name: seguradoras; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.seguradoras (
     pkseguradora smallint NOT NULL,
     txnomeseguradora character varying(250) NOT NULL,
@@ -1698,8 +1698,8 @@ CREATE TABLE public.seguradoras (
     nucep character(8) DEFAULT NULL::bpchar,
     dtcadseguradora date NOT NULL
 );
-ALTER TABLE public.seguradoras OWNER TO postgres;
--- COMENTÁRIO DE TABELA: seguradoras; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.seguradoras OWNER TO root;
+-- COMENTÁRIO DE TABELA: seguradoras; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.seguradoras IS 'Cadastro das Seguradoras de valores.';
 COMMENT ON COLUMN public.seguradoras.pkseguradora IS 'PK da tabela.';
 COMMENT ON COLUMN public.seguradoras.txnomeseguradora IS 'Nome completo e sem abreviações.';
@@ -1708,7 +1708,7 @@ COMMENT ON COLUMN public.seguradoras.txcomplemento IS 'Texto com o complemento d
 COMMENT ON COLUMN public.seguradoras.nucep IS 'Número do CEP (somente números).';
 COMMENT ON COLUMN public.seguradoras.dtcadseguradora IS 'Data de geração do registro.';
 
--- Name: seguradorastels; Type: TABLE; Schema: public; Owner: postgres
+-- Name: seguradorastels; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.seguradorastels (
     pkseguradoratel smallint NOT NULL,
     fkseguradora smallint NOT NULL,
@@ -1717,8 +1717,8 @@ CREATE TABLE public.seguradorastels (
     txnomecontato character varying(30),
     dtcadseguradoratel date
 );
-ALTER TABLE public.seguradorastels OWNER TO postgres;
--- COMENTÁRIO DE TABELA: seguradorastels; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.seguradorastels OWNER TO root;
+-- COMENTÁRIO DE TABELA: seguradorastels; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.seguradorastels IS 'Cadastro dos telefones de cada Seguradora.';
 COMMENT ON COLUMN public.seguradorastels.pkseguradoratel IS 'PK da tabela.';
 COMMENT ON COLUMN public.seguradorastels.fkseguradora IS 'FK apontando para a tabela Seguradoras.';
@@ -1726,7 +1726,7 @@ COMMENT ON COLUMN public.seguradorastels.fktipotelefone IS 'FK apontando para a 
 COMMENT ON COLUMN public.seguradorastels.nutelefone IS 'Número do telefone (somente os números)';
 COMMENT ON COLUMN public.seguradorastels.dtcadseguradoratel IS 'Data de geração do registro';
 
--- Name: seguros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: seguros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.seguros (
     pknumeroapolice integer NOT NULL,
     fkveiculo integer NOT NULL,
@@ -1736,8 +1736,8 @@ CREATE TABLE public.seguros (
     vlcobertura double precision NOT NULL,
     dtcadseguro date NOT NULL
 );
-ALTER TABLE public.seguros OWNER TO postgres;
--- COMENTÁRIO DE TABELA: seguros; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.seguros OWNER TO root;
+-- COMENTÁRIO DE TABELA: seguros; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.seguros IS 'Cadastro dos Seguros assumidos para cada Seguradora.';
 COMMENT ON COLUMN public.seguros.pknumeroapolice IS 'PK da Tabela (assumindo que as seguradoras tenham um cadastro único de apólices de seguros)';
 COMMENT ON COLUMN public.seguros.fkveiculo IS 'FK com o código do veículo (pode ser carro ou ônibus).';
@@ -1747,7 +1747,7 @@ COMMENT ON COLUMN public.seguros.dtlimitecobertura IS 'Data limite da cobertura 
 COMMENT ON COLUMN public.seguros.vlcobertura IS 'Valor da cobertura da apólice de seguro.';
 COMMENT ON COLUMN public.seguros.dtcadseguro IS 'Data de geração do registro.';
 
--- Name: servicos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: servicos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.servicos (
     pkservico integer NOT NULL,
     txnomecurto character varying(90),
@@ -1755,15 +1755,15 @@ CREATE TABLE public.servicos (
     vlestimado numeric(8,2),
     dtcadservico date
 );
-ALTER TABLE public.servicos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: servicos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.servicos OWNER TO root;
+-- COMENTÁRIO DE TABELA: servicos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.servicos IS 'Cadastro dos serviços oferecidos pelas oficinas que cobrem os sinistros das seguradoras.';
 COMMENT ON COLUMN public.servicos.pkservico IS 'PK da tabela.';
 COMMENT ON COLUMN public.servicos.txnomecurto IS 'Nome simples do serviço com palavras sem abreviações.';
 COMMENT ON COLUMN public.servicos.txdescricao IS 'Descrição do que é feito no serviço. Palavras sem abreviações.';
 COMMENT ON COLUMN public.servicos.vlestimado IS 'Valor aproximado do serviço.';
 COMMENT ON COLUMN public.servicos.dtcadservico IS 'Data de geração do registro';
--- COMENTÁRIO DE TABELA: servicosfeitospor; Type: COMMENT; Schema: public; Owner: postgres
+-- COMENTÁRIO DE TABELA: servicosfeitospor; Type: COMMENT; Schema: public; Owner: root
 CREATE TABLE public.servicosfeitospor (
     pkservicofeitopor integer NOT NULL,
     fkoficina integer NOT NULL,
@@ -1772,7 +1772,7 @@ CREATE TABLE public.servicosfeitospor (
     nudiasprevistos smallint NULL,
     dtcadfeitopor date NULL
 );
-ALTER TABLE public.servicosfeitospor OWNER TO postgres;
+ALTER TABLE public.servicosfeitospor OWNER TO root;
 COMMENT ON TABLE public.servicosfeitospor IS 'Registros dos Serviços feitos pelas Oficinas.';
 COMMENT ON COLUMN public.servicosfeitospor.pkservicofeitopor IS 'PK da tabela. Número inteiro sequencial crescente de 5 em 5.';
 COMMENT ON COLUMN public.servicosfeitospor.fkoficina IS 'FK para tabela oficinas (que realiza um serviço).';
@@ -1781,37 +1781,37 @@ COMMENT ON COLUMN public.servicosfeitospor.txdescricaocomplementar IS 'Descriç�
 COMMENT ON COLUMN public.servicosfeitospor.nudiasprevistos IS 'Prazo inicialmente previsto para o serviço.';
 COMMENT ON COLUMN public.servicosfeitospor.dtcadfeitopor IS 'Data de geração do registro.';
 
--- Name: setoresdeatuacao; Type: TABLE; Schema: public; Owner: postgres
+-- Name: setoresdeatuacao; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.setoresdeatuacao (
     pksetoratuacao smallint NOT NULL,
     txnomesetordeatuacao character varying(90) NOT NULL,
     txdescricaosetordeatuacao character varying(250) NOT NULL,
     dtcadsetordeatuacao date NOT NULL
 );
-ALTER TABLE public.setoresdeatuacao OWNER TO postgres;
--- COMENTÁRIO DE TABELA: setoresdeatuacao; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.setoresdeatuacao OWNER TO root;
+-- COMENTÁRIO DE TABELA: setoresdeatuacao; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.setoresdeatuacao IS 'Cadastro dos setores de atuação das empresas onde funcionários já trabalharam.';
 COMMENT ON COLUMN public.setoresdeatuacao.pksetoratuacao IS 'PK da Tabela.';
 COMMENT ON COLUMN public.setoresdeatuacao.txnomesetordeatuacao IS 'Nome completo e sem abreviações';
 COMMENT ON COLUMN public.setoresdeatuacao.txdescricaosetordeatuacao IS 'Texto descrevendo o que se desenvolve no setor de atuação.';
 COMMENT ON COLUMN public.setoresdeatuacao.dtcadsetordeatuacao IS 'Data de geração do registro.';
 
--- Name: sinistros; Type: TABLE; Schema: public; Owner: postgres
+-- Name: sinistros; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.sinistros (
     pksinistro integer NOT NULL,
     txnomesinistro character varying(90) NOT NULL,
     txdescricaosinistro character varying(250) NOT NULL,
     dtcadsinistro date NOT NULL
 );
-ALTER TABLE public.sinistros OWNER TO postgres;
--- COMENTÁRIO DE TABELA: sinistros; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.sinistros OWNER TO root;
+-- COMENTÁRIO DE TABELA: sinistros; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.sinistros IS 'Cadastro dos Sinistros (acidentes) que podem ocorrer nos veículos segurados de uma seguradora.';
 COMMENT ON COLUMN public.sinistros.pksinistro IS 'PK da Tabela.';
 COMMENT ON COLUMN public.sinistros.txnomesinistro IS 'Denominação formal do sinistro.';
 COMMENT ON COLUMN public.sinistros.txdescricaosinistro IS 'Descrição completa do sinistro (usando termos jurídicos).';
 COMMENT ON COLUMN public.sinistros.dtcadsinistro IS 'Data de geração do registro.';
 
--- Name: tarefas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tarefas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.tarefas (
     pktarefa smallint NOT NULL,
     txnometarefa character(40) NOT NULL,
@@ -1819,8 +1819,8 @@ CREATE TABLE public.tarefas (
     qthoraspadrao smallint DEFAULT NULL::numeric,
     dtcadtarefa date
 );
-ALTER TABLE public.tarefas OWNER TO postgres;
--- COMENTÁRIO DE TABELA: tarefas; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.tarefas OWNER TO root;
+-- COMENTÁRIO DE TABELA: tarefas; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.tarefas IS 'Cadastro das tarefas que podem ser desenvolvidas pelos funcionários em projetos.';
 COMMENT ON COLUMN public.tarefas.pktarefa IS 'PK da Tabela';
 COMMENT ON COLUMN public.tarefas.txnometarefa IS 'Nome curto da ação de projeto (sem abreviações).';
@@ -1828,7 +1828,7 @@ COMMENT ON COLUMN public.tarefas.txdescricaotarefa IS 'Descrição completa de u
 COMMENT ON COLUMN public.tarefas.qthoraspadrao IS 'Quantidade de Horas padrão para a ação em qualquer projeto.';
 COMMENT ON COLUMN public.tarefas.dtcadtarefa IS 'Data de geração do registro';
 
--- Name: tarefasprojetos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: tarefasprojetos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.tarefasprojetos (
     pktarefaprojeto integer NOT NULL,
     fkprojeto character(6) NOT NULL,
@@ -1837,8 +1837,8 @@ CREATE TABLE public.tarefasprojetos (
     nuordem smallint DEFAULT NULL::numeric,
     dtcadtarefaprojeto date
 );
-ALTER TABLE public.tarefasprojetos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: tarefasprojetos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.tarefasprojetos OWNER TO root;
+-- COMENTÁRIO DE TABELA: tarefasprojetos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.tarefasprojetos IS 'Registro das tarefas que são necessárisa em cada projeto.';
 COMMENT ON COLUMN public.tarefasprojetos.pktarefaprojeto IS 'PK da tabela.';
 COMMENT ON COLUMN public.tarefasprojetos.fkprojeto IS 'FK indicando o código do projeto que tem a tarefa.';
@@ -1847,49 +1847,49 @@ COMMENT ON COLUMN public.tarefasprojetos.qthorasenvolvidas IS 'Quantidade de hor
 COMMENT ON COLUMN public.tarefasprojetos.nuordem IS 'Número de ordem da tarefa dentro do projeto.';
 COMMENT ON COLUMN public.tarefasprojetos.dtcadtarefaprojeto IS 'Data de geração do registro.';
 
--- Name: telefonestipos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: telefonestipos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.telefonestipos (
     pktipotelefone smallint NOT NULL,
     txdescricaotptelefone character varying(250) NOT NULL,
     dtcadtipotelefone date NOT NULL
 );
-ALTER TABLE public.telefonestipos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: telefonestipos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.telefonestipos OWNER TO root;
+-- COMENTÁRIO DE TABELA: telefonestipos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.telefonestipos IS 'Cadastro dos tipos de telefones (fixo, celular, empresarial, etc.).';
 COMMENT ON COLUMN public.telefonestipos.pktipotelefone IS 'PK da Tabela';
 COMMENT ON COLUMN public.telefonestipos.txdescricaotptelefone IS 'Texto descrevendo o tipo de telefone (sem abreviações).';
 COMMENT ON COLUMN public.telefonestipos.dtcadtipotelefone IS 'Data da geração do registro';
 
--- Name: turmas; Type: COMMENT; Schema: public; Owner: postgres
+-- Name: turmas; Type: COMMENT; Schema: public; Owner: root
 CREATE TABLE public.turmas (
     pkturma smallint NOT NULL,
     nuanosemestre character(5),
     fkatribuicao smallint,
     dtcadturma date NULL
 );
-ALTER TABLE public.turmas OWNER TO postgres;
+ALTER TABLE public.turmas OWNER TO root;
 COMMENT ON TABLE public.turmas IS 'Registros dos Serviços feitos pelas Oficinas.';
 COMMENT ON COLUMN public.turmas.pkturma IS 'PK da tabela. Número inteiro sequencial crescente de 1 em 1.';
 COMMENT ON COLUMN public.turmas.nuanosemestre IS 'Ano e Semestre quando a turma existe.';
 COMMENT ON COLUMN public.turmas.fkatribuicao IS 'FK para a tabela atribuicoes.';
 COMMENT ON COLUMN public.turmas.dtcadturma IS 'Data de geração do registro.';
 
--- Name: veiculosmarcas; Type: TABLE; Schema: public; Owner: postgres
+-- Name: veiculosmarcas; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.veiculosmarcas (
     pkmarca integer NOT NULL,
     txnomemarca character varying(90) NOT NULL,
     fkfabricante smallint NOT NULL,
     dtcadmarcaveiculo date NOT NULL
 );
-ALTER TABLE public.veiculosmarcas OWNER TO postgres;
--- COMENTÁRIO DE TABELA: veiculosmarcas; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.veiculosmarcas OWNER TO root;
+-- COMENTÁRIO DE TABELA: veiculosmarcas; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.veiculosmarcas IS 'Cadastro das marcas de veículos desenvolvidos por fabricantes.';
 COMMENT ON COLUMN public.veiculosmarcas.pkmarca IS 'PK da Tabela';
 COMMENT ON COLUMN public.veiculosmarcas.txnomemarca IS 'Nome completo e sem abreviações';
 COMMENT ON COLUMN public.veiculosmarcas.fkfabricante IS 'FK com o código do fabricante da marca.';
 COMMENT ON COLUMN public.veiculosmarcas.dtcadmarcaveiculo IS 'Data de Geração do Registro.';
 
--- Name: veiculosmodelos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: veiculosmodelos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.veiculosmodelos (
     pkmodelo integer NOT NULL,
     fkmarca integer NOT NULL,
@@ -1897,8 +1897,8 @@ CREATE TABLE public.veiculosmodelos (
     aotipocombustivel character(1) NOT NULL,
     dtcadmodeloveiculo date NOT NULL
 );
-ALTER TABLE public.veiculosmodelos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: veiculosmodelos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.veiculosmodelos OWNER TO root;
+-- COMENTÁRIO DE TABELA: veiculosmodelos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.veiculosmodelos IS 'Cadastro de modelos de veículos';
 COMMENT ON COLUMN public.veiculosmodelos.pkmodelo IS 'PK da Tabela';
 COMMENT ON COLUMN public.veiculosmodelos.fkmarca IS 'FK com o código da marca de veiculos feitos por fabricantes.';
@@ -1906,20 +1906,20 @@ COMMENT ON COLUMN public.veiculosmodelos.txdescricaomodelo IS 'Texto com a descr
 COMMENT ON COLUMN public.veiculosmodelos.aotipocombustivel IS 'Atributo Operacional: tipo de combustível Álcool, Gasolina, Diesel, GáS ou Flex';
 COMMENT ON COLUMN public.veiculosmodelos.dtcadmodeloveiculo IS 'Data de Geração doRegistro';
 
--- Name: veiculostipos; Type: TABLE; Schema: public; Owner: postgres
+-- Name: veiculostipos; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.veiculostipos (
     pktipoveiculo smallint NOT NULL,
     txdescricaotpveiculo character varying(250) NOT NULL,
     dtcadtipoveiculo date NOT NULL
 );
-ALTER TABLE public.veiculostipos OWNER TO postgres;
--- COMENTÁRIO DE TABELA: veiculostipos; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.veiculostipos OWNER TO root;
+-- COMENTÁRIO DE TABELA: veiculostipos; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.veiculostipos IS 'Cadastro dos Tipos de Veículos';
 COMMENT ON COLUMN public.veiculostipos.pktipoveiculo IS 'PK da tabela.';
 COMMENT ON COLUMN public.veiculostipos.txdescricaotpveiculo IS 'Texto descrevendo o tipo de veiculo (rodoviário, náutico, aéreo, etc)';
 COMMENT ON COLUMN public.veiculostipos.dtcadtipoveiculo IS 'Data de geração do registro';
 
--- Name: viagens; Type: TABLE; Schema: public; Owner: postgres
+-- Name: viagens; Type: TABLE; Schema: public; Owner: root
 CREATE TABLE public.viagens (
     pkviagem integer NOT NULL,
     fkrota integer DEFAULT NULL::numeric,
@@ -1929,8 +1929,8 @@ CREATE TABLE public.viagens (
     hrchegadaprev time without time zone,
     dtcadviagem date
 );
-ALTER TABLE public.viagens OWNER TO postgres;
--- COMENTÁRIO DE TABELA: viagens; Type: COMMENT; Schema: public; Owner: postgres
+ALTER TABLE public.viagens OWNER TO root;
+-- COMENTÁRIO DE TABELA: viagens; Type: COMMENT; Schema: public; Owner: root
 COMMENT ON TABLE public.viagens IS 'Cadastro de viagens feitas pelos ônibus';
 COMMENT ON COLUMN public.viagens.pkviagem IS 'PK da tabela.';
 COMMENT ON COLUMN public.viagens.fkrota IS 'FK com o código da rota viária da viagem.';
@@ -1943,7 +1943,7 @@ COMMENT ON COLUMN public.viagens.dtcadviagem IS 'Data de geração do registro';
 -- Aqui termina o segmento do script que cria os objetos de dados (tables e views).
 -- ######################################################################################################################################################################
 -- Aqui começa o segmento do script que insere linhas nas tabelas.
--- Data for Name: agencias; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: agencias; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.agencias
             VALUES ('001', '6632X ', 'Nove de Julho', 10, '452', '01478529', '2010-10-05'),
                    ('001', '6633X ', 'Antonio Mori', 10, '745', '14521521', '2010-10-05'),
@@ -2005,13 +2005,13 @@ INSERT INTO public.agencias
                    ('748', '0001X ', 'Matriz', 620, '14564 - Bloco 1', '04452160', '2020-09-15'),
                    ('756', '0001X ', 'Matriz', 620, '14564 - Bloco 1', '04452160', '2020-09-15'),
                    ('M09', '0001X ', 'Matriz', 620, '14564 - Bloco 1', '04452160', '2020-09-15');
--- Data for Name: agenciastels; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: aplicacaodascontas; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: aplicacoesfinanceiras; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: agenciastels; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: aplicacaodascontas; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: aplicacoesfinanceiras; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.aplicacoesfinanceiras
             VALUES (5, 'RDB', 'Investimento de 5000 (mínimo) por um período de 30 dias (mínimo).', 3.5, 5.5, '2016-10-18'),
                    (10, 'Poupança', 'Investimento de 500 (mínimo) com liquidez diária a partir de 30 dias do depósito inicial.', 1, 1.5, '2016-10-18');
--- Data for Name: areasdeestudo; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: areasdeestudo; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.areasdeestudo
             VALUES (25, 'Gestão e Administração', '', '2010-12-16'),
                    (30, 'Tecnologias da Informação e Comunicação', '', '2010-12-16'),
@@ -2020,14 +2020,14 @@ INSERT INTO public.areasdeestudo
                    (10, 'Humanas', '', '2001-01-01'),
                    (15, 'Biomédicas', '', '2001-01-01'),
                    (20, 'Ciências Ambientais', '', '2001-01-01');
--- Data for Name: areasdeestudocursos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: areasdeestudocursos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.areasdeestudocursos
             VALUES (20, 4, 30, '2001-05-10'),
                    (15, 3, 35, '2001-05-10'),
                    (5, 1, 15, '2001-06-10'),
                    (10, 3, 20, '2001-05-10'),
                    (12, 1, 35, '2010-10-10');
--- Data for Name: areasdeestudodisciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: areasdeestudodisciplinas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.areasdeestudodisciplinas
             VALUES (20, 1, 25, '2011-05-10'),
                    (25, 1, 35, '2005-05-05');
@@ -2038,19 +2038,19 @@ INSERT INTO public.areasdeestudodisciplinas
                    (10, 1, 10, '1980-01-01'),
                    (35, 2, 10, '2010-10-10'),
                    (15, 1, 20, '2004-02-04');
--- Data for Name: areasdeestudolivros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: areasdeestudolivros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.areasdeestudolivros
             VALUES (10, 20, 25, 1, '2010-10-10'),
                    (15, 70, 25, 2, '2010-10-10'),
                    (5, 20, 5, 10, '2010-10-10');
--- Data for Name: armazens; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: armazens; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.armazens
             VALUES (2, 'Sao Sebastiao', '', 470, ' 1492', 10, '            ', '        ', 50000, '1980-01-01'),
                    (5, 'Dois Irmaos', '', 470, ' 234', 10, '            ', '        ', 15000, '1980-01-01'),
                    (15, 'Big Warehouse Bahia', 'Galpão Único com pé direito de 15Metros', 240, '456', 55, '123         ', '12313212', 35000, '2010-10-10'),
                    (3, 'Rio de Janeiro - 01', 'Galpão Único com pé direito de 15Metros - Lojas Americanas', 470, ' 234', 10, '2174857485  ', '12345678', 20000, '1980-01-01'),
                    (1, 'Americanas V', 'Galpão Único com pé direito de 15Metros - Lojas Americanas', 100, 'Km 30', 10, '1145124512  ', '12345678', 150000, '2015-12-07');
--- Data for Name: atividades; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: atividades; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.atividades
             VALUES (25, 'Implementação de programas', 'Programação, testes, implantação e treinamento dos usuários', '2010-10-10'),
                    (5, 'Estudos de Viabilidade', 'Analisa as condições de exequibilidade de projetos', '2011-06-11'),
@@ -2058,7 +2058,7 @@ INSERT INTO public.atividades
                    (15, 'Modelagem do sistema', 'Definição de modelos de dados e processos', '2010-10-10'),
                    (20, 'Especificação técnica de Dados e processos', 'Definição do Modelo Físico. Determinação dos Modelos de Dados e Processos', '2010-10-10'),
                    (30, 'Construção dos Bancos de Dados', 'Implantação do SGBD e construção dos BDs.', '2010-10-10');
--- Data for Name: atribuicoes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: atribuicoes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.atribuicoes
             VALUES (1, 1, 1, 10, '1980-01-01', NULL),
                    (2, 1, 2, 12, '1980-01-01', NULL),
@@ -2150,7 +2150,7 @@ INSERT INTO public.atribuicoes
                    (88, 29, 20, 6, '2013-11-25', NULL),
                    (89, 29, 21, 6, '2013-11-25', NULL),
                    (90, 29, 22, 6, '2013-11-25', NULL);
--- Data for Name: atuacoes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: atuacoes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.atuacoes VALUES (1, 1, 10, '2017-10-05', '2017-10-30', 100, '2017-11-05'),
                    (2, 2, 10, '2017-10-05', '2017-10-30', 100, '2017-11-05'),
                    (3, 3, 10, '2017-10-05', '2017-10-30', 100, '2017-11-05'),
@@ -3536,7 +3536,7 @@ INSERT INTO public.atuacoes VALUES (1, 1, 10, '2017-10-05', '2017-10-30', 100, '
                    (1383, 54, 470, '2017-10-05', '2017-10-30', 100, '2017-11-05'),
                    (1384, 55, 470, '2017-10-05', '2017-10-30', 100, '2017-11-05'),
                    (1385, 56, 470, '2017-10-05', '2017-10-30', 100, '2017-11-05');
--- Data for Name: autores; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: autores; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.autores
             VALUES (10, 'Maurício Alencar Vieira', 600, ' 985', '12345678', '1980-01-01', '2013-03-20'),
                    (20, 'Luis Tolstoi Villas Correa', 460, ' 1254', '15452145', '1980-01-01', '2010-10-10'),
@@ -3545,16 +3545,16 @@ INSERT INTO public.autores
                    (70, 'César Camargo Mariano', 40, '15', '41524152', '1955-08-09', '1995-05-05'),
                    (80, 'Vinicius de Morais', 490, '2324', '04512451', '1935-05-10', '1985-10-10'),
                    (130, 'Cecilia Meireles Fonseca Lins', 590, ' Km 289', '02342345', '1980-01-01', '2009-10-10');
--- Data for Name: autorestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: autorestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.autorestels
             VALUES (5, 10, 5, '1433522653     ', '2016-10-18'),
                    (10, 10, 10, '14985641452    ', '2016-10-18');
--- Data for Name: autorias; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: autorias; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.autorias
             VALUES (5, 10, 10, '2011-10-10'),
                    (10, 10, 20, '2010-10-10'),
                    (15, 93, 10, '2019-09-21');
--- Data for Name: bairros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: bairros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.bairros
             VALUES (1, 'Centro', 10, '2014-03-29'),
                    (2, 'Centro', 5, '2014-03-29'),
@@ -3570,8 +3570,8 @@ INSERT INTO public.bairros
                    (13, 'Centro', 25, '2020-09-07'),
                    (14, 'Centro', 30, '2020-09-07'),
                    (10, 'Centro', 35, '2020-09-07');
--- Data for Name: bairroslogradouros; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: bancos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: bairroslogradouros; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: bancos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.bancos (pkbanco,txnomebanco,dtfundacao,aocompetencia,fklogradourosede,txcomplemento,nucepsede,dtcadbanco,nucnpjbanco,txsigla,website,aosituacao,aohistorico,qtagencias,aocapitalaberto)
             VALUES ('001', 'Banco do Brasil', '1940-05-02', 'F', 10, '', '12345678', '2018-02-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
                    ('002', 'Banco Central do Brasil', '1940-05-02', 'F', 10, '', '12345678', '2018-02-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
@@ -3631,7 +3631,7 @@ INSERT INTO public.bancos (pkbanco,txnomebanco,dtfundacao,aocompetencia,fklograd
                    ('748', 'Banco Cooperativo Sicredi - BANSICREDI', '1940-05-02', 'C', 10, '', '12345678', '2018-02-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
                    ('756', 'Banco Cooperativo do Brasil - BANCOOB', '1940-05-02', 'C', 10, '', '12345678', '2018-02-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL),
                    ('M09', 'Banco Itaucred Financiamentos', '1940-05-02', 'P', 10, '', '12345678', '2018-02-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL);
--- Data for Name: bibliografia; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: bibliografia; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.bibliografia
             VALUES (5, 1, 50, 'B', '1980-01-01', '2016-08-01'),
                    (10, 4, 40, 'C', '2011-06-02', '2016-08-01'),
@@ -3643,11 +3643,11 @@ INSERT INTO public.bibliografia
                    (40, 13, 20, 'B', '2015-10-23', '2015-10-23'),
                    (45, 13, 40, 'C', '2015-10-23', '2015-10-23'),
                    (50, 14, 60, 'B', '2010-10-10', '2010-10-10');
--- Data for Name: capacitacoes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: capacitacoes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.capacitacoes
             VALUES (5, 1, 10, '2016-10-01', '20016-10-01', '2016-10-18', NULL),
                    (10, 3, 20, '2016-10-01', '2016-10-10', '2016-10-18', NULL);
--- Data for Name: cidades; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cidades; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.cidades
        VALUES (5, 'Sao Paulo', 'SP', 'aeroporto, rodovia, ferrovia e hidrovia', 12000000, 780, '1980-10-10', '2019-01-21'),
                    (10, 'Osasco', 'SP', 'rodovia e ferrovia', 1000000, 0, '1980-10-10', '2019-01-21'),
@@ -3657,7 +3657,7 @@ INSERT INTO public.cidades
                    (30, 'Diadema', 'SP', 'rodovia e ferrovia', 900000, 0, '1980-10-10', '2019-01-21'),
                    (35, 'Guarulhos', 'SP', 'aeroporto, rodovia e ferrovia', 2200000, 0, '1980-10-10', '2019-01-21'),
                    (40, 'Ourinhos', 'SP', 'rodovia e ferrovia', 105000, 280, '2008-10-10', '1918-12-13');
--- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: clientes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.clientes
             VALUES (5, 'Mecânica Marreco', 'Vendas e Trocas de Moveis Dragão Imperial S/C Ltda.', 290, '8560', '04514512', 20000, 'B', '2015-11-05'),
                    (10, 'Tratoria do Sargento', 'Ristoranti Il Tratoria do Sargento', 600, ' 985', '        ', 25000, 'B', '2007-02-02'),
@@ -3674,7 +3674,7 @@ INSERT INTO public.clientes
                    (80, 'Vingadores', 'Associação dos vingadores de vovós desamparadas S/C Ltda.', 290, '1234', '23523453', 2000, 'A', '2016-11-10'),
                    (55, 'Autoposto São Luiz', 'Companhia de Abastecimento Autoposto São Luiz S/C Ltda.', 350, '4512', '45781245', 20000, 'A', '2015-10-28'),
                    (85, 'EdUEL', 'Editora da Universidade Estadual de Londrina S/C Ltda.', 490, '2650', '45121452', 25000, 'A', '2017-03-06');
--- Data for Name: clientestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: clientestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.clientestels
             VALUES (1, 25, 5, '1232323434     ', NULL, NULL),
                    (6, 25, 5, '114528562      ', NULL, NULL),
@@ -3682,7 +3682,7 @@ INSERT INTO public.clientestels
                    (3, 25, 15, '1144141412     ', NULL, NULL),
                    (4, 25, 15, '114528562      ', NULL, NULL),
                    (5, 40, 15, '114528562      ', NULL, NULL);
--- Data for Name: consultas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: consultas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.consultas
             VALUES (2, 20, 1, '2013-03-20 08:20:00', NULL, 2, 'A', '2013-03-10'),
                    (3, 30, 1, '2013-03-20 09:20:00', NULL, 2, 'A', '2013-03-10'),
@@ -3696,7 +3696,7 @@ INSERT INTO public.consultas
                    (11, 130, 1, '2016-03-21 11:00:00', NULL, 2, 'A', '2016-03-10'),
                    (12, 150, 1, '2016-03-21 08:20:00', NULL, 2, 'A', '2016-03-10'),
                    (13, 160, 1, '2016-03-21 08:40:00', NULL, 2, 'A', '2016-03-10');
--- Data for Name: contas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: contas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.contas
             VALUES ('001  ', '6632X ', '153052', 10, '2016-10-18', NULL),
                    ('001  ', '6632X ', '153060', 10, '2016-10-18', NULL),
@@ -3704,7 +3704,7 @@ INSERT INTO public.contas
                    ('001  ', '6633X ', '145241', 20, '2016-10-18', NULL),
                    ('001  ', '6632X ', '451254', 30, '2016-10-18', NULL),
                    ('001  ', '6632X ', '124527', 30, '2016-10-18', NULL);
--- Data for Name: cores; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: cores; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.cores
             VALUES (1, 'abobora', 234, '2012-03-26'),
                    (2, 'Verde', 23452, '2012-03-26'),
@@ -3717,16 +3717,16 @@ INSERT INTO public.cores
                    (9, 'verde limão', 234, '2012-03-26'),
                    (10, 'DASDFASD', 12313, '2010-10-15'),
                    (15, 'ashdfahsdf', 23123, '2013-09-18');
--- Data for Name: coresveiculos; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: cursos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: coresveiculos; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: cursos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.cursos
             VALUES (1, 'Conhecimentos de química fundamental na arte culinária.', 1, 50, '2013-03-12'),
                    (3, 'conceitos fundamentais de astronomia', 2, 80, '2010-10-10'),
-                   (4, 'Administrando Sistemas de Informação com o PostgreSQL', 4, 120, '1996-01-01'),
+                   (4, 'Administrando Sistemas de Informação com o rootQL', 4, 120, '1996-01-01'),
                    (5, 'Como Desenvolver um Software com Gambiarra', 3, 60, '2010-10-10'),
                    (6, 'Avaliação de Mercados emergentes de hipermidias', 4, 60, '2010-10-10'),
                    (7, 'Fundamentos de Engenharia de Software', 3, 80, '2010-05-10');
--- Data for Name: departamentos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: departamentos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.departamentos
             VALUES ('A02', 'Desenvolvimento de Rotinas de Biblio', 150, 'A01', 'Polo de Desenvolvimento de TI', 450, '2010-10-10', '2010-10-10'),
                    ('A01', 'Desenvolvimento de Software', 160, 'A01', 'Av. Luis Carlos Berrini, 2340', 8000, '2010-10-10', '2010-10-10'),
@@ -3743,13 +3743,13 @@ INSERT INTO public.departamentos
                    ('Z97', 'Desenvolvimento de polos de energia', 290, 'Z97', 'Av. Copernico, 23-456', 7500, '2010-10-10', '2010-10-10'),
                    ('Z98', 'Desenvolvimento de Usinas Solares.', 120, 'Z97', 'Campus da Universidade de Ourinhos - SP', 900, '2010-10-10', '2010-10-10'),
                    ('Z99', 'Desenvolvimento de Usinas eólicas', 100, 'Z97', 'Centro Empresarial de Fortaleza - CE', 150, '2010-10-10', '2010-10-10');
--- Data for Name: departamentostels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: departamentostels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.departamentostels
             VALUES (2, 'F22', 15, '1145874567     ', NULL, '2022-05-05'),
                    (4, 'A01', 15, '1425412145     ', NULL, '2022-05-15'),
                    (5, 'A01', 15, '14 33256214    ', NULL, '2022-05-15'),
                    (3, 'F22', 20, '11452145241    ', NULL, '2022-05-20');
--- Data for Name: disciplinas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: disciplinas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.disciplinas
             VALUES (1, 1, 'CALCULO I', '', 0, '1980-01-01', NULL),
                    (2, 1, 'CALCULO II', '', 0, '1980-01-01', NULL),
@@ -3774,20 +3774,20 @@ INSERT INTO public.disciplinas
                    (21, 1, 'Avaliação de Qualidade em Fábrica de Software', 'Apresenta métricas e métodos de avaliação de Qualidade de So', 120, '2010-10-10', NULL),
                    (22, 1, 'ENGENHARIA DE SOFTWARE I', '', 0, '1980-01-01', NULL),
                    (27, 7, 'Antropologia moderna', 'Estudos dos comportamentos humanos no contexto dos séculos 20 e 21.', 120, '2010-10-10', NULL);
--- Data for Name: duplicatas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: duplicatas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.duplicatas
             VALUES (10, 13, '2016-01-10', NULL, 50, 5, 45, 5, '2015-12-10'),
                    (15, 13, '2016-02-10', NULL, 50, 5, 45, 5, '2015-12-10'),
                    (5, 8, '2015-10-10', NULL, 50, 0, 50, 10, '2015-10-10'),
                    (20, 8, '2016-01-10', NULL, 50, 5, 45, 10, '2015-12-10');
--- Data for Name: editoras; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: editoras; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.editoras
             VALUES (1, 'Abril       ', 'Abril Editora S/C Ltda.', NULL, 450, ' 1234', '12345678', NULL, NULL, NULL, '2010-10-10'),
                    (2, 'McGraw-Books', 'Editora McGraw-Books S.A.', NULL, 290, ' 234', '1245124 ', NULL, NULL, NULL, '2005-05-20'),
                    (3, 'Nova        ', 'Nova Editora S.A.', NULL, 330, ' 1450', '1452142 ', NULL, NULL, NULL, '2006-04-20'),
                    (4, 'FDT Editores', 'FDT - Editores Associados S/C Ltda.', NULL, 460, ' 1254', '98765432', NULL, NULL, NULL, '2010-10-10'),
                    (5, 'Ericas      ', 'Editora e produtora Erica S/C Ltda.', NULL, 430, ' 234', '14512412', NULL, NULL, NULL, '2010-10-10');
--- Data for Name: editorastels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: editorastels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.editorastels
             VALUES (5, 1, 10, '5511856985221', 'Luiz Gama', '2019-02-20'),
                    (6, 1, 10, '5511451524643', 'Antonio Lima', '2019-02-10'),
@@ -3796,18 +3796,18 @@ INSERT INTO public.editorastels
                    (3, 4, 15, '5543562345576', 'Guimarães', '2019-03-15'),
                    (7, 2, 15, '5511451552144', 'Carlos Molina', '2019-02-04'),
                    (8, 2, 15, '5511748451254', 'Marilice', '2019-02-04');
--- Data for Name: empresas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: empresas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.empresas
             VALUES (2, 'Lorenzetti', 'Fabrica de Produtos Elétricos Lorenzetti S/C Ltda.', '4567646546546   ', 420, ' 234', '11452145', 1, 'P', '1986-05-20', '2010-10-10'),
                    (3, 'Supermack', 'Equipamentos Frigoríficos  Supermack S/C Ltda.', '34564643456     ', 560, ' 234', '11451245', 1, 'G', '1996-04-20', '2012-10-10'),
                    (4, 'TecMon', 'Tecnica de Montagens e Ajustes de Equip. Domiciliares S/C Ltda', '3456354675467856', 440, ' 456', '41452145', 1, 'G', '1966-06-20', '2010-10-10'),
                    (1, 'FAME', 'Fabrica Americana de Materiais Elétricos S.A.', '45674567456     ', 530, ' 1456', '11452145', 2, 'M', '2005-08-10', '2011-06-10');
--- Data for Name: empresastels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: empresastels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.empresastels
             VALUES (5, 1, 15, '1145265236     ', 'José', '2016-05-02'),
                    (6, 1, 20, '154221512150221', 'Nabucodonosor', '2016-05-02'),
                    (7, 1, 20, '4152241251121  ', 'Ana', '2016-05-20');
--- Data for Name: especialidadesmedicas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: especialidadesmedicas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.especialidadesmedicas
             VALUES (1, 'Clínica Geral', '', '2010-10-05'),
                    (2, 'Pediatria', '', '2010-10-05'),
@@ -3817,7 +3817,7 @@ INSERT INTO public.especialidadesmedicas
                    (6, 'Gastroenterologia', '', '2010-10-05'),
                    (7, 'Infectologista', '', '2010-12-10'),
                    (8, 'Oncolologista', '', '2010-12-10');
--- Data for Name: estadosdauniao; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: estadosdauniao; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.estadosdauniao
             VALUES ('AC', 'Acre',             'Rio Branco', NULL, 100, NULL, 'BRA', '2018-09-30'),
                    ('AL', 'Alagoas',          'Maceio',     NULL, 150, NULL, 'BRA', '2018-09-30'),
@@ -3826,14 +3826,14 @@ INSERT INTO public.estadosdauniao
                    ('ES', 'Espírito Santo',   'Vitória',    NULL, 150, NULL, 'BRA', '2018-09-30'),
                    ('DF', 'Distrito Federal', 'Brasilia',   NULL, 10,  NULL, 'BRA', '2018-09-30'),
                    ('SP', 'São Paulo',        'São Paulo',  NULL, 500, NULL, 'BRA', '2018-09-30');
--- Data for Name: fabricantes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: fabricantes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.fabricantes
             VALUES (1, 'Volkswagen', 'Fábrica de Veículos Brasileiros VolksWagen S.A.', NULL, 100, ' 34000', '14512413', NULL, NULL, NULL, '2001-05-20'),
                    (2, 'FIAT', 'Fabrica Italiana de Automóveis S.A', NULL, 90, ' 3450', '12987456', NULL, NULL, NULL, '2001-05-20'),
                    (3, 'GM', 'Montador de Veículos General Motors Cia. Ltda.', NULL, 100, ' Km 50', '0232345 ', NULL, NULL, NULL, '1962-10-10'),
                    (4, 'Autolatina', 'Fabrica de veículos automotivos Autolatina S.A.', NULL, 460, '4500', '0451245 ', NULL, NULL, NULL, '2010-10-10'),
                    (5, 'Nissan', 'Fábrica de automóveis Nissan do Brasil S.A.', NULL, 170, '1452', '12345678', NULL, NULL, NULL, '2010-10-10');
--- Data for Name: fabricantestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: fabricantestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.fabricantestels
             VALUES (5, 1, 10, '1178754745     ', 'Hermann', '2019-05-10'),
                    (4, 2, 10, '1144566776     ', 'Ennio', '2019-04-20'),
@@ -3843,7 +3843,7 @@ INSERT INTO public.fabricantestels
                    (6, 3, 10, '1197654678     ', 'Smith', '2019-09-01'),
                    (7, 4, 10, '1147574845     ', 'Joselva', '2019-09-01'),
                    (8, 5, 10, '1174851245     ', 'Jose Kualker', '2019-09-01');
--- Data for Name: faturas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: faturas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.faturas
             VALUES (5, 1, '2016-11-10', NULL, 2105, 0, 2255, 150, '2016-11-12'),
                    (10, 1, '2016-12-10', NULL, 850, 0, 850, 0, '2016-10-10'),
@@ -3851,22 +3851,22 @@ INSERT INTO public.faturas
                    (20, 3, '2016-11-10', NULL, 2500, 0, 2500, 0, '2016-11-10'),
                    (25, 3, '2015-12-10', NULL, 650, 0, 650, 0, '2016-11-10'),
                    (30, 1, '2010-10-10', NULL, 500, 80, 420, 120, '2010-10-05');
--- Data for Name: feitospor; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: fornecedores; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: feitospor; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: fornecedores; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.fornecedores
             VALUES (1, 'Fazenda Rio Branco', 'Latic', NULL, 370, ' Km 350', '12345678', 1, 100000, NULL, NULL, NULL, '2008-01-20'),
                    (2, 'Leite Mont Blanc', 'Laticinio Mont Blanc S/C Ltda.', NULL, 590, ' Km 289', '12345678', 2, 120000, NULL, NULL, NULL, '2010-10-10'),
                    (5, 'Hamburgueria Girafa', 'Restaurante Franco-Italiano Girafa S/C Ltda.', NULL, 70, ' 4345', '12345678', 2, 5000, NULL, NULL, NULL, '1998-10-10'),
                    (10, 'Fazenda Rio Claro', 'Fazenda de produtos laticionios Rio Claro S/C Ltda.', NULL, 240, 'Km 35', '74512845', 2, 50000, NULL, NULL, NULL, '2010-10-10');
--- Data for Name: fornecedorestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: fornecedorestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.fornecedorestels
             VALUES (1, 1, 10, '1174185296     ', NULL, '2019-09-02'),
                    (2, 2, 10, '5474185296     ', NULL, '2019-09-02'),
                    (3, 5, 10, '1196385274     ', NULL, '2019-09-02'),
                    (4, 10, 10, '3145124512     ', NULL, '2019-09-02'),
                    (5, 1, 15, '43985264521    ', NULL, '2019-09-02');
--- Data for Name: fornecimentos; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: funcionarios; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: fornecimentos; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: funcionarios; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.funcionarios
             VALUES (40, 'MAUDE', 'SETRIGHT', 'E11', 10, 99, 470, ' 234', '3332', '1994-09-12', 'F', '1961-04-21', '', 35900, 300, 1272, '        ', '1980-01-01'),
                    (60, 'IRVING', 'STERN', 'D11', 4, 16, 380, ' 125 - 15And Ap 156', '6423', '2003-09-14', 'M', '1975-07-07', '', 72250, 500, 2580, '        ', '1980-01-01'),
@@ -3915,19 +3915,19 @@ INSERT INTO public.funcionarios
                    (80, 'RAMLAL ABDUL', 'MEHTA', 'E21', 10, 16, 520, ' 1245', '9990', '1995-07-07', 'M', '1962-08-11', '', 39950, 400, 1596, '        ', '1980-01-01'),
                    (90, 'EILEEN B''ORGN', 'HENDERSON', 'E11', 10, 16, 390, ' 150', '5498', '2000-08-15', 'F', '1971-05-15', '', 89750, 600, 2380, '        ', '1980-01-01'),
                    (480, 'HELENA', 'WONG', 'E21', 9, 14, 600, ' 985', '2103', '2006-02-23', 'F', '1971-07-18', '', 35370, 500, 2030, '        ', '1980-01-01');
--- Data for Name: funcionariosplanos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: funcionariosplanos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.funcionariosplanos
             VALUES (5, 10, 1, '2016-12-07', '2016-12-07', '2016-12-07'),
                    (10, 20, 1, '2016-12-07', '2016-12-07', '2016-12-07'),
                    (15, 10, 2, '2016-12-07', '2016-12-07', '2016-12-07'),
                    (20, 10, 4, '2016-12-07', '2016-12-07', '2016-12-07');
--- Data for Name: funcionariostels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: funcionariostels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.funcionariostels
             VALUES (4, 20, 5, '2345345        ', 'José', '2017-05-20'),
                    (2, 10, 10, '2342345        ', 'Ana', '2018-04-10'),
                    (3, 10, 15, '23453245       ', 'Rui', '2018-05-10'),
                    (1, 10, 20, '1231313        ', 'Abel', '2018-06-25');
--- Data for Name: funcoes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: funcoes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.funcoes
             VALUES (1, 'Presidente', '', 15, '1980-01-01'),
                    (2, 'Diretor Comercial', '', 5, '1980-01-01'),
@@ -3941,7 +3941,7 @@ INSERT INTO public.funcoes
                    (10, 'Gerente de Opera', '', 1, '1980-01-01'),
                    (11, 'Professor', '', 2, '1980-01-01'),
                    (12, 'Auxiliar Administrativo', '', 1, '1980-01-01');
--- Data for Name: grausdeescolaridade; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: grausdeescolaridade; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.grausdeescolaridade
             VALUES (14, 'Ensino fundamental I', 4, '1980-01-01'),
                    (15, 'Ensino Fundamental II', 4, '1980-01-01'),
@@ -3953,7 +3953,7 @@ INSERT INTO public.grausdeescolaridade
                    (99, 'Pos-Graduacao (Doutorado)', 5, '1980-01-01'),
                    (30, 'Pos-Graduacao (MBA)', 1, '1980-01-01'),
                    (31, 'Mestrado', 3, '2011-12-10');
--- Data for Name: habilitacoes; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: habilitacoes; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.habilitacoes
             VALUES (10, 3, 2, '2010-05-05', '2010-05-05', '2010-05-10'),
                    (15, 3, 2, '2010-10-10', '2010-10-10', '2010-10-10'),
@@ -3965,7 +3965,7 @@ INSERT INTO public.habilitacoes
                    (55, 3, 24, '2012-10-10', '2012-10-10', '2012-10-15'),
                    (60, 4, 2, '2010-10-10', '2010-10-10', '2010-10-10'),
                    (70, 5, 1, '2012-10-10', '2012-10-10', '2012-10-15');
--- Data for Name: historicoprofissional; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: historicoprofissional; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.historicoprofissional
             VALUES (4, 90, 1, 25, '2002-06-26', '2004-07-30', '2012-10-01'),
                    (11, 150, 1, 5, '2007-05-10', '2007-09-10', '2007-05-10'),
@@ -3973,14 +3973,14 @@ INSERT INTO public.historicoprofissional
                    (3, 60, 1, 20, '2001-01-20', '2002-06-25', '2012-08-12'),
                    (5, 70, 1, 30, '2012-10-10', '2013-11-10', '2013-06-19'),
                    (6, 150, 1, 30, '2010-10-10', '2011-10-10', '2013-06-21');
--- Data for Name: instituicoesdeensino; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: instituicoesdeensino; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.instituicoesdeensino
             VALUES (1, 'Faculdade de Belas Artes', 60, ' 1500', 'P', '1958-05-10', '12767890', '2001-01-10'),
                    (2, 'Faculdade de Arqitetura de Urbanismo de S', 120, ' 500', 'G', '1952-05-10', '        ', '2001-01-10'),
                    (3, 'Escola Politecnica da USP', 10, ' 564 - sob a escada', 'G', '1892-01-10', '14514251', '2001-10-10'),
                    (4, 'Escola de 1 e 2 Grau Amadeu Amaral', 500, ' 1200', 'G', '1918-06-20', '14215125', '1996-01-01'),
                    (5, 'Escola Superior de Propaganda e Marketing', 470, ' 3456', 'P', '1950-01-10', '15642854', '2010-10-10');
--- Data for Name: instituicoestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: instituicoestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.instituicoestels
             VALUES (1, 5, 15, '1433526523     ', NULL, '2016-08-28'),
                    (2, 5, 20, '1545124512     ', NULL, '2016-08-28'),
@@ -3988,8 +3988,8 @@ INSERT INTO public.instituicoestels
                    (4, 3, 20, '1425252541     ', NULL, '2016-08-28'),
                    (5, 3, 20, '1145215213     ', NULL, '2016-08-28'),
                    (7, 3, 20, '545454         ', NULL, '2016-08-28');
--- Data for Name: inventarios; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: livros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: inventarios; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: livros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.livros
             VALUES (10, 'Preparando pratos com Lagostas', NULL, 1, '2010-10-12', '2010', NULL, 20, 2, '2011-08-01'),
                    (20, 'Cálculo Diferencial e Integral', NULL, 1, '2010-10-12', '2010', NULL, 40, 10, '2011-08-01'),
@@ -4002,7 +4002,7 @@ INSERT INTO public.livros
                    (40, 'O Alfabeto dos Numeros', NULL, 1, '2008-10-10', '2008', NULL, 20, 5, '2011-08-01'),
                    (92, 'A Menina que roubava Livros', NULL, 1, '2007-04-10', '2007', NULL, 75, 10, '2007-05-10'),
                    (93, 'O fim da eternidade', NULL, 1, '2019-09-10', '2019', 456, 35, 15, '2019-09-30');
--- Data for Name: logradouros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: logradouros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.logradouros
             VALUES (10, 'dos alfineiros', 5, 33, NULL, '1996-01-01'),
                    (40, 'Luiz Antonio', 5, 33, NULL, '2000-05-29'),
@@ -4065,7 +4065,7 @@ INSERT INTO public.logradouros
                    (440, 'Alba', 5, 33, NULL, '2010-10-10'),
                    (480, 'dos Maias', 10, 33, NULL, '2010-10-10'),
                    (500, 'Bela Cintra', 10, 33, NULL, '2010-10-10');
--- Data for Name: logradourostipos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: logradourostipos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.logradourostipos
             VALUES (1, 'Aeroporto', '2018-10-25'),
                    (2, 'Alameda', '2018-10-25'),
@@ -4111,7 +4111,7 @@ INSERT INTO public.logradourostipos
                    (42, 'Viaduto', '2018-10-25'),
                    (43, 'Viela', '2018-10-25'),
                    (44, 'Vila', '2018-10-25');
--- Data for Name: matriculas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: matriculas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.matriculas
             VALUES (2, 1, 20, '2014-08-01', '2015-06-30', '2015-07-05'),
                    (3, 1, 30, '2014-08-01', '2015-06-30', '2015-07-05'),
@@ -4130,7 +4130,7 @@ INSERT INTO public.matriculas
                    (16, 4, 40, '2014-08-01', '2015-06-30', '2015-07-05'),
                    (21, 5, 230, '2012-10-10', '2013-10-10', '2012-10-05'),
                    (1, 1, 70, '2014-08-01', '2015-06-30', '2015-07-05');
--- Data for Name: medicos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: medicos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.medicos
             VALUES (1, 'Sebastião Quirino dos Santos', 1234, 5, 1, 350, '1450 - ap45', '12345678', 350, '1460 - 25ºAndar Cj 2547', '14258963', 'A', '2010-10-05'),
                    (2, 'Franco da Rocha', 1233, 1, 1, 470, '', '87654321', 350, '', '41852963', 'D', '2010-10-05'),
@@ -4150,8 +4150,8 @@ INSERT INTO public.medicos
                    (16, 'Geraldo Luiz Albuquerque Ramos', 17765765, 1, 4, 610, '', '63741258', 300, '', '98654253', 'D', '2010-10-10'),
                    (17, 'Natalia Felícia Queiroz', 12318723, 2, 2, 470, '', '36258147', 470, '', '85236941', 'D', '2010-10-10'),
                    (18, 'Alberto Clementino dos Santos', 34532222, 3, 2, 20, '500', '65487123', 470, '456', '12345698', 'A', '2001-10-05');
--- Data for Name: medicostels; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: movimentos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: medicostels; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: movimentos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.movimentos
             VALUES (1, 10, 50, '2010-10-10', 10, '2010-10-10', '2010-10-10', '2010-10-15'),
                    (2, 40, 80, '2011-08-25', 10, '2011-08-25', '2011-08-25', '2011-08-25'),
@@ -4160,7 +4160,7 @@ INSERT INTO public.movimentos
                    (5, 10, 50, '2010-10-11', 30, '2010-10-11', '2010-10-11', '2010-10-15'),
                    (7, 10, 50, '2010-10-10', 20, '2010-10-10', '2010-10-10', '2010-10-15'),
                    (6, 20, 150, '2010-10-10', 20, '2010-10-15', '2010-10-14', '2010-10-10');
--- Data for Name: movimentostipos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: movimentostipos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.movimentostipos
             VALUES (10, 'Entrada em Tombamento', 'A', '2011-08-20'),
                    (20, 'Saida de Tombamento', 'A', '2011-08-20'),
@@ -4173,12 +4173,12 @@ INSERT INTO public.movimentostipos
                    (90, 'Devolução de Empréstimo entre Bibliotecas', 'E', '2014-03-29'),
                    (100, 'Retirada para Manutenção da Peça do Acervo', 'A', '2014-03-29'),
                    (110, 'Devolução de Manutenção de Peça do Acervo', 'A', '2014-03-29');
--- Data for Name: nfcompras; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: nfcompras; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.nfcompras
             VALUES (2, 2, 10, '2016-10-10', 2500, 'A', 'Bons profutos na última compra', '2016-10-10'),
                    (1, 5, 10, '2016-10-10', 3105, 'A', 'Fornecedor com bom histórico de compra', '2016-10-10'),
                    (3, 1, 20, '2016-10-10', 3150, 'A', 'Ótimo gado de Corte', '2016-10-10');
--- Data for Name: nfcomprasitens; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: nfcomprasitens; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.nfcomprasitens
             VALUES (1, '001001001001', 10, 38),
                    (1, '001001001002', 25, 45),
@@ -4187,7 +4187,7 @@ INSERT INTO public.nfcomprasitens
                    (2, '001002001004', 10, 50),
                    (3, '001001001001', 20, 45),
                    (3, '001001001003', 50, 45);
--- Data for Name: nfvendas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: nfvendas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.nfvendas
             VALUES (41, 5, 50, 1, 90, '2012-05-01', '2012-05-01', '2012-05-01'),
                    (42, 30, 50, 3, 90, '2012-05-01', '2012-05-01', '2012-05-01'),
@@ -4335,7 +4335,7 @@ INSERT INTO public.nfvendas
                    (98, 20, 200, 3, 68.5, '2012-05-09', '2012-05-09', '2012-05-09'),
                    (99, 15, 440, 1, 68.5, '2012-05-09', '2012-05-09', '2012-05-09'),
                    (100, 40, 360, 1, 68.5, '2012-05-09', '2012-05-09', '2012-05-09');
--- Data for Name: nfvendasitens; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: nfvendasitens; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.nfvendasitens
             VALUES (1, '001001001001', 10, 1.25),
                    (1, '001001001002', 20, 2.15),
@@ -4835,26 +4835,26 @@ INSERT INTO public.nfvendasitens
                    (152, '001001001003', 20, 2.45),
                    (152, '001001001005', 20, 3.15),
                    (152, '001002001004', 10, 2);
--- Data for Name: ocorrencias; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: ocorrencias; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.ocorrencias
             VALUES (5, 1, 5, 145241, 120, 130, 'Colisão lateral dos veículos trafegando pela Av. Politécnica e logo a seguir colindo com um muro e um poste no cruzamento da R. das Laranjeiras.', '2010-10-10'),
                    (6, 3, 8, 145241, 170, 300, 'Roubo com uso de arma de fogo por volta das 23h00', '2010-10-10');
--- Data for Name: oficinas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: oficinas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.oficinas
             VALUES (1, 'Oficina Mecânica de Reparos Gerais Luiz Porto S/C Ltda.', '01245241521   ', 'Luizinho', 520, NULL, '2010-10-10'),
                    (2, 'Oficina de Reparos Gerais "Marreco" S/C Ltda.', '123123        ', 'Marreco', 240, NULL, '2015-10-10');
--- Data for Name: oficinastels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: oficinastels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.oficinastels
             VALUES (1, 1, 10, '1174185296     ', NULL, '2019-09-02'),
                    (2, 2, 10, '5474185296     ', NULL, '2019-09-02'),
                    (3, 2, 10, '1196385274     ', NULL, '2019-09-02'),
                    (4, 1, 10, '3145124512     ', NULL, '2019-09-02'),
                    (5, 2, 15, '43985264521    ', NULL, '2019-09-02');
--- Data for Name: paises; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: paises; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.paises
        VALUES ('BRA','Brasil','Brasilia',8512798,'2020-02-10'),
 	          ('ITA','Itália','',1512798,'2020-02-10');
--- Data for Name: palavraschaves; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: palavraschaves; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.palavraschaves
             VALUES (1, 'Amor', '2010-12-13'),
                    (2, 'Carinho', '2010-12-13'),
@@ -4867,7 +4867,7 @@ INSERT INTO public.palavraschaves
                    (9, 'Matemática', '2016-12-07'),
                    (10, 'Física', '2016-12-07'),
                    (11, 'Cálculo Diferencial', '2016-12-07');
--- Data for Name: palavraslivros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: palavraslivros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.palavraslivros
             VALUES (1, 92, '2016-12-07');
 INSERT INTO public.palavraslivros
@@ -4876,19 +4876,19 @@ INSERT INTO public.palavraslivros
                    (9, 90, '2016-12-07'),
                    (9, 40, '2016-12-07'),
                    (10, 50, '2016-12-07');
--- Data for Name: passagens; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: pedcompras; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: pedcomprasitens; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: pedvendas; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: pedvendasitens; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: planosdesaude; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: passagens; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: pedcompras; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: pedcomprasitens; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: pedvendas; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: pedvendasitens; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: planosdesaude; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.planosdesaude
             VALUES (1, 'Unimed', 'zvfzxfasdfsdfasdf', NULL, 350, ' 1243', '2354235 ', '2010-10-27'),
                    (2, 'SulAmericana', 'Trocando os valores', NULL, 470, ' 1492', '14524515', '2010-10-27'),
                    (4, 'MedialSaude', NULL, NULL, 470, ' 1492', NULL, '2010-10-27'),
                    (5, 'teter', 'sadfsdf', NULL, 470, ' 234', '12313123', '2010-10-10');
--- Data for Name: planosmedicos; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: planostels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: planosmedicos; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: planostels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.planostels
             VALUES (5, 2, 5, '12341234       ', NULL, '2016-06-10'),
                    (8, 4, 5, '141514541242   ', NULL, '2016-07-05'),
@@ -4897,7 +4897,7 @@ INSERT INTO public.planostels
                    (1, 4, 20, '1421254412     ', NULL, '2016-05-20'),
                    (4, 2, 20, '12341234       ', NULL, '2016-05-25'),
                    (7, 1, 20, '2134523453     ', NULL, '2016-07-08');
--- Data for Name: produtos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: produtos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.produtos
             VALUES ('001003001002', 'Trocando de Valor na Descricao Curta', 123.00, 120.00, 120.00, 0.00, 15, 'Trocando de Valor na Descricao completa', '2010-10-10'),
                    ('001001001001', 'metafluocoreto de potássio', 40.00, 35.00, 26.00, 0.00, 0, 'o metafluocoreto ', '1980-01-01'),
@@ -4907,7 +4907,7 @@ INSERT INTO public.produtos
                    ('001002001004', 'amianto de sódio', 40.00, 22.00, 20.00, 0.00, 0, 'asdfsadf', '1980-01-01'),
                    ('001002003001', 'Acido Sulfúrico', 15.00, 1100.00, 950.00, 0.00, 0, 'Este ', '1980-01-01'),
                    ('001003001001', 'Resfriador de Sódio', 40.00, 1450.00, 1100.00, 0.00, 0, NULL, '2010-10-20');
--- Data for Name: professores; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: professores; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.professores
             VALUES (1, 'ANA MARIA VERDIM', 470, ' 3456', '3436567 ', '1960-12-19', '2005-05-11'),
                    (2, 'ABEL DA SILVA', 110, ' 234', '1233536 ', '1964-07-11', '2001-08-21'),
@@ -4939,11 +4939,11 @@ INSERT INTO public.professores
                    (28, 'VINICIUS HUMBRTO PINHEIRO DA SILVA', 220, ' 4512', '5844426 ', '1965-11-05', '2005-01-10'),
                    (29, 'VERA ADRIANA HUANG AZEVEDO', 200, ' 745', '15122222', '1970-02-10', '2010-10-10'),
                    (35, 'EURIPEDES SOARES DE ALMEIDA', 170, '450', '12345678', '1957-05-10', '1975-10-10');
--- Data for Name: professorestels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: professorestels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.professorestels
             VALUES (4, 1, 5, '99999777       ', NULL),
                    (3, 7, 20, '88887777       ', NULL);
--- Data for Name: projetos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: projetos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.projetos
             VALUES ('AD3100', 'ADMIN SERVICES       ', 'A01', 10, 6.50, '2002-01-01', '2003-02-01', 'AD3100', '1980-01-01'),
                    ('AD3110', 'GENERAL ADMIN SYSTEMS', 'A01', 20, 6.00, '2002-01-01', '2003-02-01', 'AD3100', '1980-01-01'),
@@ -4964,15 +4964,15 @@ INSERT INTO public.projetos
                    ('123457', 'alterando', 'Z97', 200, 280000.00, '2010-10-10', '2010-10-10', 'AD3112', '2010-10-10'),
                    ('AD2323', 'BIG DATA/SSP', 'E21', 40, 850.00, '2016-03-01', '2017-02-28', 'OP2010', '2016-02-10'),
                    ('Z90   ', 'teste', 'B01', 160, 45000.00, '2011-10-10', '2010-10-10', 'AD3100', '2010-10-10');
--- Data for Name: rotasviarias; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: rotasviarias; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.rotasviarias
             VALUES (1, 'Rota 1', 'passa em Chavantes, Ipaussu, Sta Cruz do Rio Pardo e vai pela Castelo Brancos', 40, 5, '2010-10-10'),
                    (2, 'Rota 2', 'passa em Chavantes, Ipaussu, Sta Cruz do Rio Pardo e vai pela Raposo Tavares até Avaré depois pela Castelo Branco', 40, 5, '2010-10-10'),
                    (3, 'Rota 3', 'Passa por Cambará, Andirá, Bandeirantes, Cornélio Procópio, Ibaití pela BR153 (Transbrasiliana)', 40, 35, '2010-10-10'),
                    (4, 'Rota 66', 'asdasdsa as asd sd ffads', 40, 5, '2012-10-10'),
                    (8, 'Rota 88', 'Rod. Castelo Branco (até Avaré), Rod. Ildebrando Castanho (até a Rod. Raposo Tavares), Rod', 5, 40, '2013-12-11');
--- Data for Name: roteiros; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: seguradoras; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: roteiros; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: seguradoras; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.seguradoras
             VALUES (1, 'Transamerica', 200, ' 745', '        ', '2004-02-10'),
                    (5, 'Porto Seguro', 510, ' 450', '123132  ', '2010-10-10'),
@@ -4980,35 +4980,35 @@ INSERT INTO public.seguradoras
                    (2, 'Bradesco Seguros', 200, '1452', NULL, '2016-03-28'),
                    (11, 'Seguros Lunares S/C Ltda.', 260, '1452', '04512456', '2016-11-11'),
                    (3, 'Mapfre Seguros', 400, ' 2345', '14512412', '2010-02-12');
--- Data for Name: seguradorastels; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: seguradorastels; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.seguradorastels
             VALUES (1, 2, 20, '1452112212     ', NULL, NULL),
                    (2, 2, 20, '14421151       ', NULL, NULL),
                    (3, 3, 20, '1452155122     ', NULL, NULL),
                    (4, 3, 20, '1122323231     ', NULL, NULL);
--- Data for Name: seguros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: seguros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.seguros
             VALUES (145241, 5, 1, '2010-10-10', '2011-10-10', 15000, '2010-10-10'),
                    (145246, 3, 2, '2010-10-10', '2011-10-10', 15000, '2010-10-07'),
                    (145251, 7, 11, '2000-05-05', '2001-05-05', 25000, '2000-05-02');
--- Data for Name: servicos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: servicos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.servicos
             VALUES (5, 'Funilaria', 'serviços de ajuste da lataria de veículos', 300.00, '2010-10-10'),
                    (10, 'Pintura', 'Pintura simples de veículos', 350.00, '2010-10-10'),
                    (15, 'Mecânica de suspensão', 'Substituição ou ajustes do conjunto de suspensão', 500.00, '2010-10-10'),
                    (20, 'Mecânica do Motor', 'Sustituição ou ajustes de partes do motor', 600.00, '2010-10-10');
--- Data for Name: servicosprestados; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: setoresdeatuacao; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: servicosprestados; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: setoresdeatuacao; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.setoresdeatuacao
             VALUES (1, 'Industria', 'Manufaturados', '2011-06-10'),
                    (2, 'Comercio', 'Lojas de vendas em Atacado', '2011-06-10');
--- Data for Name: sinistros; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: sinistros; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.sinistros
             VALUES (1, 'colisão com um ou mais veículos em via publica', 'colisão em via publica envolvendo um ou mais veículos além do segurado', '2013-03-20'),
                    (2, 'Colisão com um ou mais veículos em via privada', 'colisão em via privada (pátios de estacionamento, rampa de garagem, acesso à sítios ou chacaras), envolvendo um ou mais veículos além do segurado', '2013-03-20'),
                    (3, 'Roubo simples', 'Veículo foi roubado sem a presença do proprietário em via pública', '2013-03-20'),
                    (4, 'Roubo privado', 'Veículo roubado de dentro de casa ou estacionamento particular sem a presença do proprietário', '2013-03-20');
--- Data for Name: tarefas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tarefas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.tarefas
             VALUES (10, 'Gerenciar                               ', 'Gerenciar/Advertir', 80, '2011-10-05'),
                    (20, 'Orçar                                   ', 'Estimar orçamentos de Projetos', 80, '2011-10-05'),
@@ -5032,7 +5032,7 @@ INSERT INTO public.tarefas
                    (200, 'Portar Dados                            ', 'Efetuar porte de dados existentes em sistemas', 80, '2011-10-05'),
                    (210, 'Desenvolvimento                         ', 'Desenvolvimento', 80, '2011-10-05'),
                    (230, 'aDSas                                   ', 'ASDasd', 234, '2010-10-10');
--- Data for Name: tarefasprojetos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: tarefasprojetos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.tarefasprojetos
             VALUES (1, 'AD2323', 10, 200, 1, '2010-10-10'),
                    (2, 'AD2323', 20, 200, 2, '2010-10-10'),
@@ -5157,14 +5157,14 @@ INSERT INTO public.tarefasprojetos
                    (122, 'OP2013', 10, 120, 1, '2010-10-10'),
                    (123, 'OP2013', 20, 90, 2, '2010-10-10'),
                    (124, 'MA2110', 40, 200, 1, '2010-10-10');
--- Data for Name: telefonestipos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: telefonestipos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.telefonestipos
             VALUES (5, 'Fixo - Residencial', '2011-10-25'),
                    (10, 'Celular Particular', '2011-10-25'),
                    (15, 'Fixo - Comercial', '2011-10-25'),
                    (20, 'Celular Empresa', '2011-10-25');
--- Data for Name: titulacoes; Type: TABLE DATA; Schema: public; Owner: postgres
--- Data for Name: veiculos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: titulacoes; Type: TABLE DATA; Schema: public; Owner: root
+-- Data for Name: veiculos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.veiculos
             VALUES (1, 'ABC1593', 1, 1, 40, 'P', NULL, 5, '2015', 'C', '2018-02-20'),
                    (2, 'BBC1593', 2, 1, 50, 'P', NULL, 5, '2010', 'C', '2017-02-20'),
@@ -5178,7 +5178,7 @@ INSERT INTO public.veiculos
                    (10, 'AYH4826', 2, 1, NULL, NULL, 'Morpheus', 45, '2016', 'O', '2015-05-04'),
                    (11, 'AUJ4826', 2, 1, NULL, NULL, 'Centauro', 45, '2016', 'O', '2015-05-04'),
                    (12, 'AJO4826', 2, 1, NULL, NULL, 'Vega', 45, '2016', 'O', '2015-05-04');
--- Data for Name: veiculosmarcas; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: veiculosmarcas; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.veiculosmarcas
             VALUES (2, 'Toruga', 1, '2010-05-10'),
                    (3, 'Elba', 2, '2005-10-10'),
@@ -5186,7 +5186,7 @@ INSERT INTO public.veiculosmarcas
                    (5, 'Uno Mille', 2, '2001-01-10'),
                    (6, 'teste', 2, '2011-05-10'),
                    (1, 'Jetta', 1, '2016-03-26');
--- Data for Name: veiculosmodelos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: veiculosmodelos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.veiculosmodelos
             VALUES (2, 1, 'Santana 2.0', 'A', '2002-02-02'),
                    (3, 6, 'voyage 1.6', 'Z', '2002-02-02'),
@@ -5194,13 +5194,13 @@ INSERT INTO public.veiculosmodelos
                    (9, 3, 'Elba WeekEnd 1.8 turbo', 'G', '2010-10-10'),
                    (1, 4, 'Bravo Cellera 2.2', 'G', '2002-05-20'),
                    (14, 4, 'Bravo Pallas 2.2', 'F', '2010-10-10');
--- Data for Name: veiculostipos; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: veiculostipos; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.veiculostipos
             VALUES (1, 'Automóvel', '2013-01-20'),
                    (2, 'Embarcação Fluvial', '2013-01-20'),
                    (3, 'Embarcação Marítima', '2013-01-20'),
                    (4, 'Avião Comercial para até 20 passageiros', '2013-01-20');
--- Data for Name: viagens; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: viagens; Type: TABLE DATA; Schema: public; Owner: root
 INSERT INTO public.viagens
             VALUES (1, 1, '2012-06-23', '00:00:00', '2012-06-23', NULL, NULL),
                    (2, 1, '2012-06-24', '00:00:00', '2012-06-23', NULL, NULL),
@@ -5213,4 +5213,4 @@ INSERT INTO public.viagens
 
 REVOKE USAGE ON SCHEMA public FROM PUBLIC;
 GRANT ALL ON SCHEMA public TO PUBLIC;
--- PostgreSQL database dump complete
+-- rootQL database dump complete
